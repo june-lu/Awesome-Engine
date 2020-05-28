@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer\ThirdParty\SDL2-2.0.12\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer;E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer\ThirdParty\SDL2-2.0.12\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer\ThirdParty\SDL2-2.0.12\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -100,7 +100,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer\ThirdParty\SDL2-2.0.12\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer;E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\SoftRenderer\ThirdParty\SDL2-2.0.12\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -125,13 +125,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base\Color.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mathf.cpp" />
     <ClCompile Include="Rasterizer.cpp" />
-    <ClCompile Include="SDLInterface.cpp" />
+    <ClCompile Include="Base\SDLInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base\Color.h" />
+    <ClInclude Include="Mathf.h" />
     <ClInclude Include="Rasterizer.h" />
-    <ClInclude Include="SDLInterface.h" />
+    <ClInclude Include="Base\SDLInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ThirdParty\SDL2-2.0.12\lib\x86\SDL2.lib" />

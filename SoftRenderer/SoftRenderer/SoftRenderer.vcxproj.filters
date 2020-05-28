@@ -21,7 +21,13 @@
     <ClCompile Include="Rasterizer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SDLInterface.cpp">
+    <ClCompile Include="Base\Color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\SDLInterface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathf.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +35,13 @@
     <ClInclude Include="Rasterizer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SDLInterface.h">
+    <ClInclude Include="Base\Color.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\SDLInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Mathf.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
