@@ -32,3 +32,4 @@
 #### 参考资料
 - [如何写一个软渲染[拳四郎]](https://zhuanlan.zhihu.com/p/42725758)
 - [如何开始用 C++ 写一个光栅化渲染器？](https://www.zhihu.com/question/24786878/answer/127484388) 
+- [Tiny renderer or how OpenGL works: software rendering in 500 lines of code](https://github.com/ssloy/tinyrenderer/wiki)

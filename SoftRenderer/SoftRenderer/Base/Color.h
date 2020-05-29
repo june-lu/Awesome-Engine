@@ -6,9 +6,6 @@
 class Color
 {
 public:
-	Color();
-	~Color();
-
 	float r;
 	float g;
 	float b;
@@ -20,9 +17,12 @@ public:
 	static Color blue;
 	static Color black;
 
-	Color(float r, float g, float b, float a = 1);
+	Color(float r, float g, float b, float a);
 	Color(const Color& color);
 	Color(uint32_t c);
+	Color();
+	~Color();
+
 	int GetUintR();
 	int GetUintG();
 	int GetUintB();
@@ -30,9 +30,9 @@ public:
 
 	Color &operator /=(float num);
 	Color &operator *=(float num);
-	Color &operator *=(const Color &color);
 	Color &operator +=(const Color &color);
 	Color &operator -=(const Color &color);
+	Color &operator *=(const Color &color);
 
 	friend std::ostream& operator<<(std::ostream& output, const Color& color)
 	{

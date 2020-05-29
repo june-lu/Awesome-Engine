@@ -2,21 +2,28 @@
 
 #include<iostream>
 #include<SDL.h>
+#include "Color.h"
 
 class SDLInterface
 {
 public:
-	SDLInterface();
+	SDLInterface(const char* windowName, int width, int height);
 	~SDLInterface();
 
 	//*********窗口*************
 	void CreateWindow(const char* windowName, int width, int height);
-	void DestoryWindow(const char* windowName);
+	void DestoryWindow(SDL_Window* window);
+	void ToggleFullscreen();
 	//*************************
 
 	//*********绘制*************
+	void CreateRenderer();
 	void Render();
-	//void DrawPixel(Color* color);
+	void DrawPixel(Color* color, int posX, int poxY);
+	void DrawLine(Color* color, int x0, int y0,int x1, int y1);
+	void SwapBuffer();
+	void SetDrawColor(Color* color);
+	void RenderClear(Color* color);
 	//**************************
 
 	//*********事件*************
@@ -29,7 +36,11 @@ public:
 	void Quit(int code);
 	//**************************
 
+private:
 	SDL_Window* mainWindow;
-	SDL_Renderer* render;
+	SDL_Renderer* renderer;
+	int screenHeight;
+	int screenWidth;
+	bool windowed = false;
 };
 
