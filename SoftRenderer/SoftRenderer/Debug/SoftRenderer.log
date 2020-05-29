@@ -1,3 +1,0 @@
-﻿  Color.cpp
-e:\study\awesome engine\awesome-engine\softrenderer\softrenderer\mathf.h(59): warning C4244: “return”: 从“float”转换到“int”，可能丢失数据
-  SoftRenderer.vcxproj -> E:\Study\Awesome Engine\Awesome-Engine\SoftRenderer\Debug\SoftRenderer.exe
