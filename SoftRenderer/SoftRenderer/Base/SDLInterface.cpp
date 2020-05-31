@@ -1,4 +1,4 @@
-#include "SDLInterface.h"
+ï»¿#include "SDLInterface.h"
 
 SDLInterface::SDLInterface(const char* windowName, int width, int height)
 {
@@ -123,7 +123,7 @@ void SDLInterface::RenderClear(Color* color)
 	SDL_RenderClear(renderer);
 }
 
-//Bresenham¡¯s Line Drawing Algorithm
+//Bresenhamâ€™s Line Drawing Algorithm
 void SDLInterface::DrawLine(Color* color, int x0, int y0, int x1, int y1)
 {
 	//1 attempt
@@ -161,7 +161,7 @@ void SDLInterface::DrawLine(Color* color, int x0, int y0, int x1, int y1)
 	int dy = y1 - y0;
 
 	//4 attempt
-	//Í¨¹ýÎó²îÌá¸ßÔËÐÐÐ§ÂÊ
+	//é€šè¿‡è¯¯å·®æé«˜è¿è¡Œæ•ˆçŽ‡
 	int dyError = Mathf::Abs(dy * 2);
 	int error = 0;
 
@@ -177,7 +177,7 @@ void SDLInterface::DrawLine(Color* color, int x0, int y0, int x1, int y1)
 			DrawPixel(color, x, y);
 
 		error += dyError;
-		if (error >  dx)
+		if (error > dx)
 		{
 			y += (y1 > y0) ? 1 : -1;
 			error -= 2 * dx;
@@ -185,3 +185,71 @@ void SDLInterface::DrawLine(Color* color, int x0, int y0, int x1, int y1)
 	}
 }
 
+void SDLInterface::DrawLine(Color* color, Vector2f start, Vector2f end)
+{
+	SDLInterface::DrawLine(color, start.x, start.y, end.x, end.y);
+}
+
+//Draw Triangle by line sweeping
+void SDLInterface::DrawTriangleByLineSweeping(Color* color, Vector2f* pts)
+{
+	// sort the vertices, t0, t1, t2 lowerâˆ’toâˆ’upper (bubblesort yay!) 
+	Vector2f pos1 = pts[0];
+	Vector2f pos2 = pts[1];
+	Vector2f pos3 = pts[2];
+
+
+	if (pos1.y > pos2.y) std::swap(pos1, pos2);
+	if (pos1.y > pos3.y) std::swap(pos1, pos3);
+	if (pos2.y > pos3.y) std::swap(pos2, pos3);
+
+	/*SDLInterface::DrawLine(&Color::white, pos1, pos2);
+	SDLInterface::DrawLine(&Color::white, pos2, pos3);
+	SDLInterface::DrawLine(&Color::white, pos3, pos1);*/
+
+	int total_height = pos3.y - pos1.y;
+	int segment_height; float beta; Vector2f B;
+	for (int y = pos1.y; y <= pos3.y; y++)
+	{
+		bool second_half = y > pos2.y - pos1.y || pos2.y == pos1.y;
+		float alpha = (float)(y - pos1.y) / total_height;
+		Vector2f A = pos1 + (pos3 - pos1)*alpha;
+		segment_height = second_half ? pos3.y - pos2.y : pos2.y - pos1.y;
+		beta = (float)(y - (second_half ? pos2.y : pos1.y)) / segment_height;
+		B = (second_half ? pos2 + (pos3 - pos2)*beta : pos1 + (pos2 - pos1)*beta);
+
+		if (A.x > B.x) std::swap(A, B);
+		for (int x = A.x; x <= B.x; x++)
+		{
+			DrawPixel(color, x, y);
+		}
+	}
+}
+
+void SDLInterface::DrawTriangleByBarycentricCoordinates(Color* color, Vector2f* pts)
+{
+	Vector2f boxMin(screenWidth - 1, screenHeight - 1);
+	Vector2f boxMax(0, 0);
+	Vector2f clamp(screenWidth - 1, screenHeight - 1);
+
+	for (int i = 0; i < 3; i++)
+	{
+		boxMin.x = Mathf::Max(0, Mathf::Min(boxMin.x, pts[i].x));
+		boxMin.y = Mathf::Max(0, Mathf::Min(boxMin.y, pts[i].y));
+
+		boxMax.x = Mathf::Min(clamp.x, Mathf::Max(boxMax.x, pts[i].x));
+		boxMax.y = Mathf::Min(clamp.y, Mathf::Max(boxMax.y, pts[i].y));
+	}
+
+	Vector2f pos;
+	for (pos.x = boxMin.x; pos.x < boxMax.x; pos.x++)
+	{
+		for (pos.y = boxMin.y; pos.y < boxMax.y; pos.y++)
+		{
+			Vector3f bcCoord = Vector3f::Barycentric(pts, pos);
+			if (bcCoord.x < 0 || bcCoord.y < 0 || bcCoord.z < 0)continue;
+
+			DrawPixel(color, pos.x, pos.y);
+		}
+	}
+}

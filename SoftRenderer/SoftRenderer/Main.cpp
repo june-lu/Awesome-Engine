@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include "Base/SDLInterface.h"
+#include "Base/Vector2.h"
 
 int main(int argc, char *argv[])
 {
@@ -7,9 +8,19 @@ int main(int argc, char *argv[])
 
 	sdlInterface->RenderClear(&Color::black);
 
-	sdlInterface->DrawLine(&Color::white, 13, 20, 80, 40);
-	sdlInterface->DrawLine(&Color::red, 20, 13, 40, 80);
-	//sdlInterface->DrawLine(&Color::green, 80, 40, 13, 20);
+	Vector2f t0[3] = { Vector2f(10, 70),   Vector2f(50, 160),  Vector2f(70, 80) };
+	Vector2f t1[3] = { Vector2f(180, 50),  Vector2f(150, 1),   Vector2f(70, 180) };
+	Vector2f t2[3] = { Vector2f(180, 150), Vector2f(120, 160), Vector2f(130, 180) };
+
+	//Vector2f pos4 = Vector2f(40, 80);
+
+	//sdlInterface->DrawLine(&Color::white, pos1, pos2);
+	//sdlInterface->DrawLine(&Color::red, pos3, pos4);
+	//sdlInterface->DrawLine(&Color::green, pos2, pos1);
+		
+	sdlInterface->DrawTriangleByBarycentricCoordinates(&Color::red, t0);
+	sdlInterface->DrawTriangleByBarycentricCoordinates(&Color::white, t1);
+	sdlInterface->DrawTriangleByBarycentricCoordinates(&Color::green, t2);
 
 	sdlInterface->Render();
 
@@ -19,5 +30,6 @@ int main(int argc, char *argv[])
 	}
 
 	getchar();
-	return 0;
+	return 0;
+
 }

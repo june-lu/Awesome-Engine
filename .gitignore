@@ -1,6 +1,4 @@
 /Target/
 Debug/
 .vs/
-*.vcxproj
-*.filters
-*.user
+x64/
