@@ -3,8 +3,7 @@
 #include<iostream>
 #include<SDL.h>
 #include "Color.h"
-#include "Vector2.h"
-#include "Vector3.h"
+#include "RenderSystem/RenderContext.h"
 
 class SDLInterface
 {
@@ -18,15 +17,15 @@ public:
 	void ToggleFullscreen();
 	//*************************
 
+	//*********Œ∆¿Ì**************
+	void CreateMainTexture();
+	void CreateSurface();
+	//**************************
+
 	//*********ªÊ÷∆*************
 	void CreateRenderer();
 	void Render();
-	void DrawPixel(Color* color, int posX, int poxY);
-	void DrawLine(Color* color, int x0, int y0,int x1, int y1);
-	void DrawLine(Color* color, Vector2f start, Vector2f end);
-	void DrawTriangleByLineSweeping(Color* color, Vector2f* pts);
-	void DrawTriangleByBarycentricCoordinates(Color* color, Vector2f* pts);
-	void SwapBuffer();
+	void SwapBuffer(RenderContext* context);
 	void SetDrawColor(Color* color);
 	void RenderClear(Color* color);
 	//**************************
@@ -41,9 +40,10 @@ public:
 	void Quit(int code);
 	//**************************
 
-private:
 	SDL_Window* mainWindow;
 	SDL_Renderer* renderer;
+	SDL_Texture* mainRt;
+	SDL_Surface* surface;
 	int screenHeight;
 	int screenWidth;
 	bool windowed = false;
