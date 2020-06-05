@@ -8,9 +8,9 @@ int main(int argc, char *argv[])
 
 	//sdlInterface->RenderClear(&Color::white);
 
-	Vector2f t0[3] = { Vector3f(0, 0, 3),   Vector3f(0, 150, 3),  Vector3f(150, 150, 3) };
-	Vector2f t1[3] = { Vector3f(150, 0, 2),  Vector3f(0, 150, 2),  Vector3f(150, 150, 2) };
-	Vector2f t2[3] = { Vector3f(0, 150, 1), Vector3f(75, 0, 1), Vector3f(150, 150, 1) };
+	Vector3f t0[3] = { Vector3f(0, 0, 3),   Vector3f(0, 150, 3),  Vector3f(150, 150, 3) };
+	Vector3f t1[3] = { Vector3f(150, 0, 4),  Vector3f(0, 150, 10),  Vector3f(150, 150, 2) };
+	Vector3f t2[3] = { Vector3f(0, 150, 1), Vector3f(75, 0, 51), Vector3f(150, 150, 1) };
 
 	//Vector2f pos4 = Vector2f(40, 80);
 

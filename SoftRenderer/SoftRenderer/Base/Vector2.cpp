@@ -10,6 +10,7 @@ Vector2f::Vector2f(const Vector3f vec3)
 {
 	x = vec3.x;
 	y = vec3.y;
+	z = 0;
 }
 
 Vector2f::~Vector2f() {}

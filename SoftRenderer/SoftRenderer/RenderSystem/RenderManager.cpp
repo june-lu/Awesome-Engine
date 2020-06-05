@@ -16,7 +16,7 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	renderContext->depthBuffer = new float[sdlInterface->screenWidth * sdlInterface->screenHeight];
 
 	memset(renderContext->frameBuffer, 0, renderContext->width * renderContext->height * 4);
-	memset(renderContext->depthBuffer, -0x3f3f3f3f, renderContext->width * renderContext->height * 4);
+	memset(renderContext->depthBuffer, 0x4f, renderContext->width * renderContext->height * 4);
 
 
 	rasterizer = new Rasterizer(renderContext);
