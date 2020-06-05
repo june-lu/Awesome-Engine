@@ -13,7 +13,7 @@ public:
 
 	void SwapBuffer();
 	void handleEvents();
-	void DrawTriangleByBarycentricCoordinates(Color* color, Vector2f* pts);
+	void DrawTriangleByBarycentricCoordinates(Color* color, Vector3f* pts);
 
 	SDLInterface* sdlInterface;
 	RenderContext* renderContext;

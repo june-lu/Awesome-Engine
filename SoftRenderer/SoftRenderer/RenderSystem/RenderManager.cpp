@@ -16,7 +16,7 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	renderContext->depthBuffer = new float[sdlInterface->screenWidth * sdlInterface->screenHeight];
 
 	memset(renderContext->frameBuffer, 0, renderContext->width * renderContext->height * 4);
-	memset(renderContext->depthBuffer, 0, renderContext->width * renderContext->height * 4);
+	memset(renderContext->depthBuffer, -0x3f3f3f3f, renderContext->width * renderContext->height * 4);
 
 
 	rasterizer = new Rasterizer(renderContext);
@@ -26,7 +26,7 @@ RenderManager::~RenderManager()
 {
 }
 
-void RenderManager::DrawTriangleByBarycentricCoordinates(Color* color, Vector2f* pts)
+void RenderManager::DrawTriangleByBarycentricCoordinates(Color* color, Vector3f* pts)
 {
 	rasterizer->DrawTriangleByBarycentricCoordinates(color, pts);
 }

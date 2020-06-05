@@ -16,7 +16,7 @@ public:
 	void DrawLine(Color* color, int x0, int y0, int x1, int y1);
 	void DrawLine(Color* color, Vector2f start, Vector2f end);
 	void DrawTriangleByLineSweeping(Color* color, Vector2f* pts);
-	void DrawTriangleByBarycentricCoordinates(Color* color, Vector2f* pts);
+	void DrawTriangleByBarycentricCoordinates(Color* color, Vector3f* pts);
 
 	RenderContext* renderContext;
 
