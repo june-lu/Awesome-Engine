@@ -57,6 +57,11 @@ Vector3f Vector3f::operator-(const Vector3f& vec)const
 	return Vector3f(x - vec.x, y - vec.y);
 }
 
+Vector3f Vector3f::operator*(const Vector3f& vec)const
+{
+	return Vector3f(x * vec.x, y * vec.y, z * vec.z);
+}
+
 Vector3f operator * (const Vector3f& lhs, double rhs)
 {
 	return Vector3f(lhs.x * rhs, lhs.y * rhs);
@@ -64,4 +69,9 @@ Vector3f operator * (const Vector3f& lhs, double rhs)
 Vector3f operator * (double lhs, const Vector3f& rhs)
 {
 	return Vector3f(lhs * rhs.x, lhs * rhs.y);
+}
+std::ostream& operator<<(std::ostream& out, const Vector3f& rhs)
+{
+	out << "(x = " << rhs.x << ", y = " << rhs.y << ", z = " << rhs.z << ")" << std::endl;
+	return out;
 }

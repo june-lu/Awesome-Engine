@@ -45,6 +45,18 @@
     <ClCompile Include="RenderSystem\RenderManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Base\Mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Texture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem\Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Vector2.h">
@@ -74,12 +86,30 @@
     <ClInclude Include="RenderSystem\RenderManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Base\Mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Texture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ThirdParty\SDL2-2.0.12\lib\x64\SDL2.lib">
       <Filter>资源文件</Filter>
     </Library>
     <Library Include="ThirdParty\SDL2-2.0.12\lib\x64\SDL2main.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="ThirdParty\Assimp-5.0.1\lib\x64\assimp-vc141-mtd.lib">
       <Filter>资源文件</Filter>
     </Library>
   </ItemGroup>

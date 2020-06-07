@@ -40,3 +40,19 @@ void RenderManager::SwapBuffer()
 {
 	sdlInterface->SwapBuffer(renderContext);
 }
+void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices)
+{
+	Vector3f scale(50, 50, 50);
+	Vector3f transform = Vector3f::right * 500;
+	for (uint32_t i = 0; i < indices.size(); i += 3)
+	{
+
+		//std::cout << "vertices[indices[i + 1]].position : " << vertices[indices[i + 1]].position << std::endl;
+		//std::cout << "vertices[indices[i + 2]].position : " << vertices[indices[i + 2]].position << std::endl;
+
+		Vector3f normal = vertices[indices[i]].normal;
+		Vector3f t[3] = { vertices[indices[i]].position * scale + transform,   vertices[indices[i + 1]].position * scale + transform,  vertices[indices[i + 2]].position * scale + transform };
+		Color color(1.0, 1.0, 0.0, 1.0);
+		DrawTriangleByBarycentricCoordinates(&color, t);
+	}
+}

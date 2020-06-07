@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Mathf.h"
+#include <iostream>
 
 class Vector3f
 {
@@ -25,9 +26,11 @@ public:
 	Vector3f operator-(const Vector3f& vec) const;
 	Vector3f operator-=(const Vector3f& vec);
 	Vector3f operator*=(const Vector3f& vec);
+	Vector3f operator*(const Vector3f& vec) const;
 
 	friend Vector3f operator * (const Vector3f& lhs, double rhs);
 	friend Vector3f operator * (double lhs, const Vector3f& rhs);
+	friend std::ostream& operator<<(std::ostream& out, const Vector3f& rhs);
 
 	static inline Vector3f Lerp(const Vector3f &v1, const Vector3f &v2, float factor)
 	{

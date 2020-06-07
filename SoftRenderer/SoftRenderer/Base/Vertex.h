@@ -5,26 +5,21 @@
 class Vertex
 {
 public:
-	Vertex();
-	~Vertex();
-};
+	
 
-
-class Vertex2D
-{
-public:
-	Vertex2D();
-	~Vertex2D();
-
-private:
-	Vector2f position;
+	Vector3f position;
+	Vector3f normal;
+	Vector2f texCoords;
 	Color color;
 
-	Vertex2D(Vector2f _position, Color _color) :position(_position), color(_color) {}
-	Vertex2D interpolate(const Vertex2D &vertex, float t) const
+	Vertex(Vector2f _position, Color _color) :position(_position), color(_color) {}
+	Vertex(Vector3f _position, Vector3f _normal, Vector2f _texCoords)
+		:position(_position), normal(_normal), texCoords(_texCoords){}
+	~Vertex();
+	Vertex interpolate(const Vertex &vertex, float t) const
 	{
 		Vector2f p = Vector2f::Lerp(position, vertex.position, t);
 		Color c = Color::Lerp(color, vertex.color, t);
-		return Vertex2D(p, c);
+		return Vertex(p, c);
 	};
 };
