@@ -2,7 +2,7 @@
 #include "Base/Model.h"
 int main(int argc, char *argv[])
 {
-	RenderManager* renderManager = new RenderManager("SoftRender", 1000, 800);
+	RenderManager* renderManager = new RenderManager("SoftRender", 800, 600);
 
 	//sdlInterface->RenderClear(&Color::white);
 

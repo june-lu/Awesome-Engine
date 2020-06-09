@@ -27,7 +27,7 @@ void Model::Draw(Shader* shader)
 void Model::LoadModel(std::string path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
+	const aiScene* scene = importer.ReadFile(path,  aiProcess_ConvertToLeftHanded);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
@@ -140,8 +140,8 @@ uint32_t Model::TextureFromFile(const char *path, bool gamma)
 	std::string fileName = std::string(path);
 	fileName += directory + "/" + fileName;
 	uint32_t textureID = 1;
-	//int width, height, nrComponents;
-	//unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 0);
+	int width, height, nrComponents;
+	unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 0);
 
 	//if (data)
 	//{
@@ -153,7 +153,7 @@ uint32_t Model::TextureFromFile(const char *path, bool gamma)
 	//else
 	//{
 	//	std::cout << "Texture failed to load at path: " << path << std::endl;
-	//	stbi_image_free(data);
+		stbi_image_free(data);
 	//}
 	//
 

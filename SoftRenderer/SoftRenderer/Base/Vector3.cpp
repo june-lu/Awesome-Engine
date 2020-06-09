@@ -20,6 +20,12 @@ Vector3f Vector3f::Cross(Vector3f lhs, Vector3f rhs)
 		lhs.x * rhs.y - lhs.y * rhs.x);
 }
 
+float Vector3f::Dot(Vector3f lhs, Vector3f rhs)
+{
+	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+}
+
+
 Vector3f Vector3f::Barycentric(Vector3f *pts, Vector3f P)
 {
 	Vector3f u = Cross(Vector3f(pts[2].x - pts[0].x, pts[1].x - pts[0].x,
@@ -30,7 +36,6 @@ Vector3f Vector3f::Barycentric(Vector3f *pts, Vector3f P)
 	if (std::abs(u.z) < 1) return Vector3f(-1, 1, 1);
 	return Vector3f(1.f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
 }
-
 
 Vector3f Vector3f::operator+=(const Vector3f& vec)
 {
@@ -74,4 +79,24 @@ std::ostream& operator<<(std::ostream& out, const Vector3f& rhs)
 {
 	out << "(x = " << rhs.x << ", y = " << rhs.y << ", z = " << rhs.z << ")" << std::endl;
 	return out;
+}
+
+Vector3f Vector3f::Normalize()
+{
+	return Vector3f(x / Magnitude(), y / Magnitude(), z / Magnitude());
+}
+
+inline float Vector3f::Magnitude() const
+{
+	return std::sqrt(x * x + y * y + z * z);
+}
+inline float Vector3f::SqrtMagnitude() const
+{
+	return (x * x + y * y + z * z);
+}
+
+Vector3f Vector3f::RotationY(int angle)
+{
+	float radian = (float)angle * Mathf::Pi / 180.0;
+	return Vector3f(x * Mathf::Cos(radian) - z * Mathf::Sin(radian), y, x * Mathf::Sin(radian) - z * Mathf::Cos(radian));
 }

@@ -6,10 +6,10 @@ Color Color::blue(0, 0, 1, 1);
 Color Color::black(0, 0, 0, 1);
 Color Color::white(1, 1, 1, 1);
 
-int Color::GetUintR() { return (int)r * 255; }
-int Color::GetUintG() { return (int)g * 255; }
-int Color::GetUintB() { return (int)b * 255; }
-int Color::GetUintA() { return (int)a * 255; }
+int Color::GetUintR() { return (int)(r * 255); }
+int Color::GetUintG() { return (int)(g * 255); }
+int Color::GetUintB() { return (int)(b * 255); }
+int Color::GetUintA() { return (int)(a * 255); }
 
 Color::Color()
 {
@@ -52,7 +52,7 @@ Color& Color::operator /=(float num)
 }
 Color& Color::operator *=(float num)
 {
-	r *= num; b *= num; g *= num; a *= num;
+	r *= num; b *= num; g *= num;;
 	return *this;
 }
 Color& Color::operator +=(const Color &color)
