@@ -5,6 +5,7 @@
 #include "Base/Vector2.h"
 #include "RenderSystem/Rasterizer.h"
 #include "Base/Vertex.h"
+#include "Base/Texture.h"
 
 class RenderManager
 {
@@ -16,7 +17,7 @@ public:
 	void SwapBuffer();
 	void handleEvents();
 	void DrawTriangleByBarycentricCoordinates(Color* color, Vector3f* pts, ShaderMode shadermodel = ShaderMode::Shaded);
-	void DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices);
+	void DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures);
 
 	SDLInterface* sdlInterface;
 	RenderContext* renderContext;

@@ -153,6 +153,7 @@
     <ClCompile Include="Base\Vertex.cpp" />
     <ClCompile Include="Base\Vector3.cpp" />
     <ClCompile Include="RenderSystem\Shader.cpp" />
+    <ClCompile Include="Base\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Color.h" />

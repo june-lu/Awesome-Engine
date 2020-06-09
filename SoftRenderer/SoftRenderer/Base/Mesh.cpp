@@ -14,5 +14,5 @@ Mesh::~Mesh()
 
 void Mesh::Draw(Shader* shader, RenderManager* renderManager)
 {
-	renderManager->DrawMesh(vertices, indices);
+	renderManager->DrawMesh(vertices, indices, textures);
 }

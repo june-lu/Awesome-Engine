@@ -6,9 +6,10 @@
 #include <vector>
 #include <string>
 #include "Mesh.h"
-#include "RenderSystem/Shader.h"
 #include "stb_image.h"
+#include "RenderSystem/Shader.h"
 #include "RenderSystem/RenderManager.h"
+
 
 class Model
 {
@@ -30,6 +31,6 @@ public:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type,
 		std::string typeName);
 
-	uint32_t TextureFromFile(const char *path, bool gamma = false);
+	Color* TextureFromFile(const char *path, bool gamma = false);
 };
 

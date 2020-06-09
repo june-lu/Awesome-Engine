@@ -27,7 +27,7 @@ void Model::Draw(Shader* shader)
 void Model::LoadModel(std::string path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path,  aiProcess_ConvertToLeftHanded);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_ConvertToLeftHanded);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
@@ -125,7 +125,7 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 		if (!skip)
 		{
 			Texture texture;
-			texture.id = TextureFromFile(str.C_Str());
+			texture.colors = TextureFromFile(str.C_Str());
 			texture.type = typeName;
 			texture.path = str.C_Str();
 			textures.push_back(texture);
@@ -135,27 +135,17 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 	return textures;
 }
 
-uint32_t Model::TextureFromFile(const char *path, bool gamma)
+Color* Model::TextureFromFile(const char *path, bool gamma)
 {
 	std::string fileName = std::string(path);
-	fileName += directory + "/" + fileName;
-	uint32_t textureID = 1;
+	fileName = directory + "/" + fileName;
+	Color* colors = new Color();
 	int width, height, nrComponents;
 	unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 0);
+	for (uint32_t i = 0; i < width * height * nrComponents; i += nrComponents)
+	{
+		colors[i%nrComponents] = Color((float)data[i] / 255.0, (float)data[i + 1] / 255.0, (float)data[i + 2] / 255.0, (float)data[i + 3] / 255.0);
+	}
 
-	//if (data)
-	//{
-	//	//if (nrComponents == 1)//Red
-	//	//else if (nrComponents == 3)//RGB
-	//	//else if (nrComponents == 4)//RGBA
-	//	stbi_image_free(data);
-	//}
-	//else
-	//{
-	//	std::cout << "Texture failed to load at path: " << path << std::endl;
-		stbi_image_free(data);
-	//}
-	//
-
-	return textureID;
+	return colors;
 }
