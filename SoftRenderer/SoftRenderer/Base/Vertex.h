@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector2.h"
 #include "Color.h"
-
+#include <string>
 class Vertex
 {
 public:
@@ -10,6 +10,7 @@ public:
 	Vector3f position;
 	Vector3f normal;
 	Vector2f texCoords;
+	std::string diffuseTexName;
 	Color color;
 
 	Vertex(Vector2f _position, Color _color) :position(_position), color(_color) {}

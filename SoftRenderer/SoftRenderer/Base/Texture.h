@@ -2,6 +2,10 @@
 #include <iostream>
 #include <assimp/scene.h>
 #include "Base/Color.h"
+#include <vector>
+
+using namespace std;
+
 class Texture
 {
 public:
@@ -9,11 +13,12 @@ public:
 	~Texture();
 
 	uint32_t id;
-	std::string type;
+	string type;
 	aiString path;
 
 	int width;
 	int height;
-	Color* colors;
+
+	static vector<vector<Color>> textureArray;
 };
 

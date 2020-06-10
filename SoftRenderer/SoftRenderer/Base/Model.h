@@ -7,6 +7,7 @@
 #include <string>
 #include "Mesh.h"
 #include "stb_image.h"
+#include"stb_image_write.h"
 #include "RenderSystem/Shader.h"
 #include "RenderSystem/RenderManager.h"
 
@@ -31,6 +32,6 @@ public:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type,
 		std::string typeName);
 
-	Texture TextureFromFile(const char *path, bool gamma = false);
+	int TextureFromFile(const char *path, Texture& texture, bool gamma = false);
 };
 

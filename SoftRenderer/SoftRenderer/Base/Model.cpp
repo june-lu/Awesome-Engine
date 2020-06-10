@@ -27,7 +27,7 @@ void Model::Draw(Shader* shader)
 void Model::LoadModel(std::string path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_ConvertToLeftHanded);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenUVCoords);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
@@ -74,7 +74,11 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			texCoords = Vector2f(0, 0);
 		}
 
+		aiMaterial* meshMat = scene->mMaterials[mesh->mMaterialIndex];
+		aiString textureName;
+		meshMat->GetTexture(aiTextureType_DIFFUSE, 0, &textureName);
 		Vertex vertex(position, normal, texCoords);
+		vertex.diffuseTexName = textureName.C_Str();
 		vertices.push_back(vertex);
 	}
 
@@ -96,9 +100,9 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			aiTextureType_DIFFUSE, "texture_diffuse");
 
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-		std::vector<Texture> specularMaps = LoadMaterialTextures(material,
+		/*std::vector<Texture> specularMaps = LoadMaterialTextures(material,
 			aiTextureType_SPECULAR, "texture_specular");
-		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());*/
 	}
 
 	return Mesh(vertices, indices, textures);
@@ -124,7 +128,8 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 		}
 		if (!skip)
 		{
-			Texture texture = TextureFromFile(str.C_Str());
+			Texture texture;
+			texture.id = TextureFromFile(str.C_Str(), texture);
 			texture.type = typeName;
 			texture.path = str.C_Str();
 			textures.push_back(texture);
@@ -134,34 +139,73 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 	return textures;
 }
 
-Texture Model::TextureFromFile(const char *path, bool gamma)
+int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 {
-	Texture texture;
+	int textureID;
 	std::string fileName = std::string(path);
+
 	fileName = directory + "/" + fileName;
-	Color* colors = new Color();
+	std::vector<Color> colors;
 	int width, height, nrComponents;
-	unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 1);
+	unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 0);
 
-	texture.width = width;
+	colors.resize(width * height + 10);
+
 	texture.height = height;
-	
-	texture.colors = colors;
+	texture.width = width;
 
-	std::cout << " fileName " << fileName << std::endl;
-	std::cout << " sizeof(data) " << sizeof(data) << std::endl;
+	/*std::cout << " fileName " << fileName << std::endl;
+	std::cout << " colors.size() " << colors.size() << std::endl;
 	std::cout << "width : " << width << std::endl;
 	std::cout << "height : " << height << std::endl;
-	std::cout << "nrComponents : " << nrComponents << std::endl;
+	std::cout << "nrComponents : " << nrComponents << std::endl;*/
 
-	for (uint32_t i = 0; i < width * height ; i++)
+	for (int row = 0; row < height; row++)
 	{
-		/*std::cout << "data[i] : " << (float)data[i] << std::endl;
-		std::cout << "data[i + 1] : " << (float)data[i + 1] << std::endl;
-		std::cout << "data[i + 2] : " << (float)data[i + 2] << std::endl;
-		std::cout << "data[i + 3] : " << (float)data[i + 3] << std::endl;*/
-		colors[i] = Color((float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0);
+		for (int col = 0; col < width; col++)
+		{
+			int dataIndex = row * width * nrComponents + col * nrComponents;
+			/*data[dataIndex + 0] = 0;
+			data[dataIndex + 1] = 255;
+			data[dataIndex + 2] = 255;
+			data[dataIndex + 3] = 255;*/
+
+			//std::cout << "row * width + col : " << row * width + col << std::endl;
+
+			colors[row * width + col] = Color((float)data[dataIndex] / 255.0, (float)data[dataIndex + 1] / 255.0,
+				(float)data[dataIndex + 2] / 255.0, (float)data[dataIndex + 3] / 255.0);
+		}
 	}
-	std::cout << "height : " << height << std::endl;
-	return texture;
+
+	textureID = Texture::textureArray.size();
+	Texture::textureArray.push_back(colors);
+
+	//write image
+//	stbi_write_png("write.png", width, height, nrComponents, data, width * nrComponents);
+
+	//for (int row = 0; row < height; row++)
+	//{
+	//	for (int col = 0; col < width; col++)
+	//	{
+	//		int dataIndex = row * width * nrComponents + col * nrComponents;
+	//		/*colors[row * width + col] = Color((float)data[dataIndex] / 255.0, (float)data[dataIndex + 1] / 255.0,
+	//			(float)data[dataIndex + 2] / 255.0, (float)data[dataIndex + 3] / 255.0);*/
+
+	//			/*std::cout << "dataIndex : " << dataIndex << std::endl;
+	//			std::cout << "index : " << row * width + col << std::endl;*/
+	//	}
+	//}
+
+	stbi_image_free(data);
+
+	//for (uint32_t i = 0; i < width * height ; i++)
+	//{
+	//	/*std::cout << "data[i] : " << (float)data[i] << std::endl;
+	//	std::cout << "data[i + 1] : " << (float)data[i + 1] << std::endl;
+	//	std::cout << "data[i + 2] : " << (float)data[i + 2] << std::endl;
+	//	std::cout << "data[i + 3] : " << (float)data[i + 3] << std::endl;*/
+	//	colors[i] = Color((float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0);
+	//}
+	//std::cout << "height : " << height << std::endl;
+	return textureID;
 }

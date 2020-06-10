@@ -60,6 +60,9 @@
     <ClCompile Include="Base\stb_image.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Base\stb_image_write.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Vector2.h">
@@ -102,6 +105,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RenderSystem\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\stb_image_write.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

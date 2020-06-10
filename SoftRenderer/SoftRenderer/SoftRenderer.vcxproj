@@ -144,6 +144,7 @@
     <ClCompile Include="Base\Mesh.cpp" />
     <ClCompile Include="Base\Model.cpp" />
     <ClCompile Include="Base\SDLInterface.cpp" />
+    <ClCompile Include="Base\stb_image_write.cpp" />
     <ClCompile Include="Base\Texture.cpp" />
     <ClCompile Include="Base\Vector2.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Base\Model.h" />
     <ClInclude Include="Base\SDLInterface.h" />
     <ClInclude Include="Base\stb_image.h" />
+    <ClInclude Include="Base\stb_image_write.h" />
     <ClInclude Include="Base\Texture.h" />
     <ClInclude Include="Base\Vector2.h" />
     <ClInclude Include="RenderSystem\RenderManager.h" />
