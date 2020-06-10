@@ -31,6 +31,6 @@ public:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type,
 		std::string typeName);
 
-	Color* TextureFromFile(const char *path, bool gamma = false);
+	Texture TextureFromFile(const char *path, bool gamma = false);
 };
 

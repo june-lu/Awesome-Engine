@@ -97,7 +97,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 		std::vector<Texture> specularMaps = LoadMaterialTextures(material,
-			aiTextureType_DIFFUSE, "texture_specular");
+			aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
@@ -124,8 +124,7 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 		}
 		if (!skip)
 		{
-			Texture texture;
-			texture.colors = TextureFromFile(str.C_Str());
+			Texture texture = TextureFromFile(str.C_Str());
 			texture.type = typeName;
 			texture.path = str.C_Str();
 			textures.push_back(texture);
@@ -135,17 +134,34 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 	return textures;
 }
 
-Color* Model::TextureFromFile(const char *path, bool gamma)
+Texture Model::TextureFromFile(const char *path, bool gamma)
 {
+	Texture texture;
 	std::string fileName = std::string(path);
 	fileName = directory + "/" + fileName;
 	Color* colors = new Color();
 	int width, height, nrComponents;
-	unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 0);
-	for (uint32_t i = 0; i < width * height * nrComponents; i += nrComponents)
-	{
-		colors[i%nrComponents] = Color((float)data[i] / 255.0, (float)data[i + 1] / 255.0, (float)data[i + 2] / 255.0, (float)data[i + 3] / 255.0);
-	}
+	unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrComponents, 1);
 
-	return colors;
+	texture.width = width;
+	texture.height = height;
+	
+	texture.colors = colors;
+
+	std::cout << " fileName " << fileName << std::endl;
+	std::cout << " sizeof(data) " << sizeof(data) << std::endl;
+	std::cout << "width : " << width << std::endl;
+	std::cout << "height : " << height << std::endl;
+	std::cout << "nrComponents : " << nrComponents << std::endl;
+
+	for (uint32_t i = 0; i < width * height ; i++)
+	{
+		/*std::cout << "data[i] : " << (float)data[i] << std::endl;
+		std::cout << "data[i + 1] : " << (float)data[i + 1] << std::endl;
+		std::cout << "data[i + 2] : " << (float)data[i + 2] << std::endl;
+		std::cout << "data[i + 3] : " << (float)data[i + 3] << std::endl;*/
+		colors[i] = Color((float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0);
+	}
+	std::cout << "height : " << height << std::endl;
+	return texture;
 }

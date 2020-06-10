@@ -48,8 +48,18 @@ void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t>
 	//std::cout << "indices.size(): " << indices.size() << std::endl;
 
 	Texture textureDiffuse = textures[0];
-	Texture textureSpecular = textures[1];
-	
+	//Texture textureSpecular = textures[1];
+
+
+	std::cout << "sizeof(textureDiffuse.colors) : " << sizeof(textureDiffuse.colors) << std::endl;
+	/*std::cout << "textureDiffuse.path : " << textureDiffuse.path.C_Str() << std::endl;
+	std::cout << "textureDiffuse.width : " << textureDiffuse.width << std::endl;
+	std::cout << "textureDiffuse.height : " << textureDiffuse.height << std::endl;*/
+
+	/*std::cout << "textureSpecular.path : " << textureSpecular.path.C_Str() << std::endl;
+	std::cout << "textureSpecular.width : " << textureSpecular.width << std::endl;
+	std::cout << "textureSpecular.height : " << textureSpecular.height << std::endl;*/
+
 	for (uint32_t i = 0; i < indices.size(); i += 3)
 	{
 
@@ -69,12 +79,13 @@ void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t>
 
 		float dotResult = Vector3f::Dot(normal, Vector3f(1, 0, 0));
 		if (dotResult <= 0) dotResult = 0;
+
 		//Color color(normal.x < 0?0:normal.x, normal.y < 0 ? 0 : normal.y, normal.z < 0 ? 0 : normal.z, 1.0);
 		Color colorDiffuse = textureDiffuse.colors[(int)(texCoord.x * textureDiffuse.width + texCoord.y * textureDiffuse.height)];
-		Color colorSpecular = textureSpecular.colors[(int)(texCoord.x * textureSpecular.width + texCoord.y * textureSpecular.height)];
+		//Color colorSpecular = textureSpecular.colors[(int)(texCoord.x * textureSpecular.width + texCoord.y * textureSpecular.height)];
 		Color color = Color::black;
-		color += colorDiffuse;
-		color += colorSpecular;
+		//color += colorDiffuse;
+		//color += colorSpecular;
 		/*std::cout << "color.r : " << color.r << std::endl;
 		std::cout << "color.g : " << color.g << std::endl;
 		std::cout << "color.b : " << color.b << std::endl;*/
