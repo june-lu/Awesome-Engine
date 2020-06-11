@@ -7,7 +7,7 @@ class Vector3f
 {
 public:
 	Vector3f();
-	Vector3f(float x, float y, float z = 0);
+	Vector3f(float x, float y, float z);
 	~Vector3f();
 
 	float x;

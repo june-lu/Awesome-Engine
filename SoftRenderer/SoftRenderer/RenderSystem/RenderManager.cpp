@@ -15,8 +15,9 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	renderContext->frameBuffer = new uint32_t[sdlInterface->screenWidth * sdlInterface->screenHeight];
 	renderContext->depthBuffer = new float[sdlInterface->screenWidth * sdlInterface->screenHeight];
 
+
 	memset(renderContext->frameBuffer, 0, renderContext->width * renderContext->height * 4);
-	memset(renderContext->depthBuffer, -0x4f, renderContext->width * renderContext->height * 4);
+	memset(renderContext->depthBuffer, 0x7f, renderContext->width * renderContext->height * 4);
 
 
 	rasterizer = new Rasterizer(renderContext);
@@ -42,8 +43,8 @@ void RenderManager::SwapBuffer()
 }
 void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures)
 {
-	Vector3f scale(35, 35, 35);
-	Vector3f transform = Vector3f::right * (renderContext->width / 2);
+	Vector3f scale(130, 130, 130);
+	Vector3f transform = Vector3f::right * (renderContext->width / 2) + Vector3f::up * (renderContext->height * 2.4);
 	float angle = 180;
 
 	Texture textureDiffuse = textures[0];

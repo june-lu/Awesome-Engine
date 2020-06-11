@@ -39,27 +39,27 @@ Vector3f Vector3f::Barycentric(Vector3f *pts, Vector3f P)
 
 Vector3f Vector3f::operator+=(const Vector3f& vec)
 {
-	return Vector3f(x + vec.x, y + vec.y);
+	return Vector3f(x + vec.x, y + vec.y, z + vec.z);
 }
 
 Vector3f Vector3f::operator-=(const Vector3f& vec)
 {
-	return Vector3f(x - vec.x, y - vec.y);
+	return Vector3f(x - vec.x, y - vec.y, z - vec.z);
 }
 
 Vector3f Vector3f::operator*=(const Vector3f& vec)
 {
-	return Vector3f(x * vec.x, y * vec.y);
+	return Vector3f(x * vec.x, y * vec.y, z * vec.z);
 }
 
 Vector3f Vector3f::operator+(const Vector3f& vec)const
 {
-	return Vector3f(x + vec.x, y + vec.y);
+	return Vector3f(x + vec.x, y + vec.y, z + vec.z);
 }
 
 Vector3f Vector3f::operator-(const Vector3f& vec)const
 {
-	return Vector3f(x - vec.x, y - vec.y);
+	return Vector3f(x - vec.x, y - vec.y, z - vec.z);
 }
 
 Vector3f Vector3f::operator*(const Vector3f& vec)const
@@ -69,11 +69,11 @@ Vector3f Vector3f::operator*(const Vector3f& vec)const
 
 Vector3f operator * (const Vector3f& lhs, double rhs)
 {
-	return Vector3f(lhs.x * rhs, lhs.y * rhs);
+	return Vector3f(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
 }
 Vector3f operator * (double lhs, const Vector3f& rhs)
 {
-	return Vector3f(lhs * rhs.x, lhs * rhs.y);
+	return Vector3f(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
 }
 std::ostream& operator<<(std::ostream& out, const Vector3f& rhs)
 {
