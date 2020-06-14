@@ -11,6 +11,11 @@ public:
 	float b;
 	float a;
 
+	uint8_t uintR;
+	uint8_t uintG;
+	uint8_t uintB;
+	uint8_t uintA;
+
 	static Color red;
 	static Color white;
 	static Color green;
@@ -29,10 +34,13 @@ public:
 	int GetUintA();
 
 	Color &operator /=(float num);
+	Color operator /(float num);
 	Color &operator *=(float num);
+	Color operator *(float num);
 	Color &operator +=(const Color &color);
 	Color &operator -=(const Color &color);
 	Color &operator *=(const Color &color);
+
 
 	friend std::ostream& operator<<(std::ostream& output, const Color& color)
 	{

@@ -11,7 +11,6 @@
 #include "RenderSystem/Shader.h"
 #include "RenderSystem/RenderManager.h"
 
-
 class Model
 {
 public:

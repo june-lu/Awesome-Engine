@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 class RenderContext
 {
@@ -11,6 +12,6 @@ public:
 	int width;
 	int height;
 	uint32_t* frameBuffer;
-	float* depthBuffer;
+	std::vector < float > depthBuffer;
 };
 

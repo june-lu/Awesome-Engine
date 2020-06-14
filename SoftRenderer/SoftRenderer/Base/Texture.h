@@ -20,5 +20,8 @@ public:
 	int height;
 
 	static vector<vector<Color>> textureArray;
+	unsigned char *mPixels;
+	Color Sample(float u, float v);
+
 };
 

@@ -1,9 +1,13 @@
+### 模型导入
+![image](SoftRenderer\Screenshots\Result.png)
 ### 待实现的功能
 - [ ] Editor
     - [ ] Scene Serialization
     - [ ] Manipulation Gizmo
 
 - [ ] Renderer
+    - [x] SDL窗口工具
+    - [x] Assimp模型工具
     - [ ] TBDR/CBDR
     - [ ] Occlusion Culling
     - [ ] CSM/PCSS
@@ -16,7 +20,7 @@
     - [ ] Russian Roulette
     - [ ] 纹理（Solid，Procedural，Cellular）
     - [ ] 反走样(SSAA, MSAA, TAA)
-    - [ ] Depth of field
+    - [x] Depth of field
     - [ ] light 光源（点光源，方向光，区域光，纹理光）
     - [ ] 物体（平面，三角形，球，四棱柱，圆柱，圆盘）
     - [ ] 加速数据结构（BVH）

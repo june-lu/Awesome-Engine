@@ -27,12 +27,13 @@ void Model::Draw(Shader* shader)
 void Model::LoadModel(std::string path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenUVCoords);
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 		return;
 	}
+
 	directory = path.substr(0, path.find_last_of('/'));
 
 	ProcessNode(scene->mRootNode, scene);
@@ -62,8 +63,18 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	for (uint32_t i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vector3f position(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-		Vector3f normal(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+		Vector3f normal = Vector3f::up;
+		if (mesh->mNormals != NULL)
+		{
+			Vector3f normal(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+		}
+		
 		Vector2f texCoords;
+
+		/*std::cout << "position" << position <<std::endl;
+		std::cout << "normal" << normal <<std::endl;
+		std::cout << "texCoords" << texCoords <<std::endl;*/
+
 		if (mesh->mTextureCoords[0])
 		{
 			texCoords.x = mesh->mTextureCoords[0][i].x;
@@ -74,11 +85,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			texCoords = Vector2f(0, 0);
 		}
 
-		aiMaterial* meshMat = scene->mMaterials[mesh->mMaterialIndex];
-		aiString textureName;
-		meshMat->GetTexture(aiTextureType_DIFFUSE, 0, &textureName);
 		Vertex vertex(position, normal, texCoords);
-		vertex.diffuseTexName = textureName.C_Str();
 		vertices.push_back(vertex);
 	}
 
@@ -100,9 +107,9 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			aiTextureType_DIFFUSE, "texture_diffuse");
 
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-		/*std::vector<Texture> specularMaps = LoadMaterialTextures(material,
+		std::vector<Texture> specularMaps = LoadMaterialTextures(material,
 			aiTextureType_SPECULAR, "texture_specular");
-		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());*/
+		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
 	return Mesh(vertices, indices, textures);
@@ -153,6 +160,7 @@ int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 
 	texture.height = height;
 	texture.width = width;
+	texture.mPixels = data;
 
 	/*std::cout << " fileName " << fileName << std::endl;
 	std::cout << " colors.size() " << colors.size() << std::endl;

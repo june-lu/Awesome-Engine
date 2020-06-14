@@ -47,5 +47,6 @@ public:
 	int screenHeight;
 	int screenWidth;
 	bool windowed = false;
+	int modelRptateAngel = 0;
 };
 

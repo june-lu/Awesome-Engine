@@ -13,7 +13,7 @@ int Color::GetUintA() { return (int)(a * 255); }
 
 Color::Color()
 {
-	
+
 }
 
 Color::~Color()
@@ -23,10 +23,10 @@ Color::~Color()
 
 Color::Color(uint32_t c)
 {
-	uint8_t uintR = c >> 16 & 0xFF;
-	uint8_t uintG = c >> 8 & 0xFF;
-	uint8_t uintB = c & 0xFF;
-	uint8_t uintA = 255;
+	uintR = c >> 16 & 0xFF;
+	uintG = c >> 8 & 0xFF;
+	uintB = c & 0xFF;
+	uintA = 255;
 
 	float inv255 = 1.0 / 255;
 
@@ -50,10 +50,18 @@ Color& Color::operator /=(float num)
 	r /= num; b /= num; g /= num; a /= num;
 	return *this;
 }
+Color Color::operator /(float num)
+{
+	return Color(r / num, b / num, g / num, a / num);
+}
 Color& Color::operator *=(float num)
 {
 	r *= num; b *= num; g *= num;;
 	return *this;
+}
+Color Color::operator *(float num)
+{
+	return Color(r  * num, b  * num, g  * num, a  * num);
 }
 Color& Color::operator +=(const Color &color)
 {

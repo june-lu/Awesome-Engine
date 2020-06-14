@@ -22,7 +22,7 @@ void SDLInterface::CreateWindow(const char* windowName, int width, int height)
 {
 	screenWidth = width;
 	screenHeight = height;
-	mainWindow = SDL_CreateWindow(windowName, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+	mainWindow = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 	if (mainWindow == NULL)
 	{
 		LogError("Could not create window");
@@ -91,6 +91,14 @@ void SDLInterface::handleKeyDownEvents(SDL_Keysym* keysym)
 		break;
 	case SDLK_F1:
 		ToggleFullscreen();
+		break;
+	case SDLK_a:
+		modelRptateAngel -= 5;
+		modelRptateAngel %= 360;
+		break;
+	case SDLK_d:
+		modelRptateAngel += 5;
+		modelRptateAngel %= 360;
 		break;
 	default:
 		break;

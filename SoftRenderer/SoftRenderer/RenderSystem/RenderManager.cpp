@@ -12,13 +12,13 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	renderContext = new RenderContext();
 	renderContext->width = sdlInterface->screenWidth;
 	renderContext->height = sdlInterface->screenHeight;
-	renderContext->frameBuffer = new uint32_t[sdlInterface->screenWidth * sdlInterface->screenHeight];
-	renderContext->depthBuffer = new float[sdlInterface->screenWidth * sdlInterface->screenHeight];
+	renderContext->frameBuffer = new uint32_t[sdlInterface->screenWidth * sdlInterface->screenHeight * 4];
+	renderContext->depthBuffer.resize(sdlInterface->screenWidth * sdlInterface->screenHeight);
 
 
-	memset(renderContext->frameBuffer, 0, renderContext->width * renderContext->height * 4);
-	memset(renderContext->depthBuffer, 0x7f, renderContext->width * renderContext->height * 4);
-
+	memset(renderContext->frameBuffer, 0x8f, renderContext->width * renderContext->height * 4);
+	//memset(renderContext->depthBuffer, 0x7f, renderContext->width * renderContext->height * 4);
+	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::infinity());
 
 	rasterizer = new Rasterizer(renderContext);
 }
@@ -41,61 +41,37 @@ void RenderManager::SwapBuffer()
 {
 	sdlInterface->SwapBuffer(renderContext);
 }
+
+void RenderManager::RenderClear()
+{
+
+	sdlInterface->RenderClear(&Color::white);
+}
+
 void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures)
 {
-	Vector3f scale(130, 130, 130);
-	Vector3f transform = Vector3f::right * (renderContext->width / 2) + Vector3f::up * (renderContext->height * 2.4);
-	float angle = 180;
+	Vector3f scale(35, 35, 35);
+	Vector3f transform = Vector3f::right * (renderContext->width / 2) + Vector3f::up;
+	float angle = 0;
 
-	Texture textureDiffuse = textures[0];
-	//Texture textureSpecular = textures[1];
-
-
-	/*std::cout << "textureDiffuse.path : " << textureDiffuse.path.C_Str() << std::endl;
-	std::cout << "textureDiffuse.width : " << textureDiffuse.width << std::endl;
-	std::cout << "textureDiffuse.height : " << textureDiffuse.height << std::endl;*/
-
-	/*std::cout << "textureSpecular.path : " << textureSpecular.path.C_Str() << std::endl;
-	std::cout << "textureSpecular.width : " << textureSpecular.width << std::endl;
-	std::cout << "textureSpecular.height : " << textureSpecular.height << std::endl;*/
 
 	for (uint32_t i = 0; i < indices.size(); i += 3)
 	{
-
-		//std::cout << "vertices[indices[i + 1]].position : " << vertices[indices[i + 1]].position << std::endl;
-		//std::cout << "vertices[indices[i + 2]].position : " << vertices[indices[i + 2]].position << std::endl;
-
-		/*std::cout << "i : " << i << std::endl;
-		std::cout << "i + 1 : " << i + 1 << std::endl;
-		std::cout << "i + 2: " << i + 2 << std::endl;*/
+		Vertex vertexs[3];
 
 		Vertex vertex = vertices[indices[i]];
+		Vertex vertex1 = vertices[indices[i + 1]];
+		Vertex vertex2 = vertices[indices[i + 2]];
 
-		//Vector3f normal = vertex.normal.Normalize();
-		Vector2f texCoord = vertex.texCoords;
-		Vector3f t[3] = { Vector3f::up * renderContext->height - vertices[indices[i]].position.RotationY(angle) * scale + transform,
-			Vector3f::up * renderContext->height - vertices[indices[i + 1]].position.RotationY(angle) * scale + transform,
-			Vector3f::up * renderContext->height - vertices[indices[i + 2]].position.RotationY(angle) * scale + transform };
+		vertexs[0] = vertex;
+		vertexs[1] = vertex1;
+		vertexs[2] = vertex2;
 
-
-		/*float dotResult = Vector3f::Dot(normal, Vector3f(1, 0, 0));
-		if (dotResult <= 0) dotResult = 0;*/
-
-		texCoord.x = Mathf::Clamp(texCoord.x, 0, 1);
-		texCoord.y = Mathf::Clamp(texCoord.y, 0, 1);
-
-		//Color color(normal.x < 0?0:normal.x, normal.y < 0 ? 0 : normal.y, normal.z < 0 ? 0 : normal.z, 1.0);
-		int UVindex = texCoord.x * (textureDiffuse.height - 1) *textureDiffuse.width + texCoord.y * (textureDiffuse.width - 1);
-		/*std::cout << "UVindex : " << UVindex << std::endl;
-		std::cout << "textureDiffuse.colors.size() : " << textureDiffuse.colors.size() << std::endl;*/
-		Color colorDiffuse = Texture::textureArray[textureDiffuse.id][UVindex];
-		//Color colorSpecular = textureSpecular.colors[(int)(texCoord.x * textureSpecular.width + texCoord.y * textureSpecular.height)];
-		//Color color = Color::black;
-		//color += colorDiffuse;
-		//color += colorSpecular;
-		/*std::cout << "color.r : " << color.r << std::endl;
-		std::cout << "color.g : " << color.g << std::endl;
-		std::cout << "color.b : " << color.b << std::endl;*/
-		DrawTriangleByBarycentricCoordinates(&colorDiffuse, t, ShaderMode::Shaded);
+		DrawTriangleByBarycentricCoordinates(textures, vertexs, ShaderMode::Shaded);
 	}
+}
+
+void RenderManager::DrawTriangleByBarycentricCoordinates(std::vector<Texture> textures, Vertex* vertexs, ShaderMode shadermodel)
+{
+	rasterizer->DrawTriangleByBarycentricCoordinates(textures, vertexs, shadermodel);
 }

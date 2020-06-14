@@ -4,6 +4,8 @@
 #include "Base/Vector2.h"
 #include "Base/Vector3.h"
 #include "RenderContext.h"
+#include "Base/Texture.h"
+#include "Base/Vertex.h"
 
 enum ShaderMode
 {
@@ -25,6 +27,7 @@ public:
 	void DrawTriangleByLineSweeping(Color* color, Vector3f* pts, ShaderMode shaderMode = ShaderMode::Shaded);
 	void DrawTriangleByWireframe(Color* color, Vector3f* pts);
 	void DrawTriangleByBarycentricCoordinates(Color* color, Vector3f* pts, ShaderMode shaderMode = ShaderMode::Shaded);
+	void DrawTriangleByBarycentricCoordinates(std::vector<Texture> textures, Vertex* vertexs, ShaderMode shaderMode = ShaderMode::Shaded);
 
 	RenderContext* renderContext;
 
