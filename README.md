@@ -1,5 +1,5 @@
 ### 模型导入
-![image](SoftRenderer\Screenshots\Result.png)
+![image](SoftRenderer/Screenshots/Result.png)
 ### 待实现的功能
 - [ ] Editor
     - [ ] Scene Serialization
