@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include "Base/Texture.h"
 
 class RenderContext
 {
@@ -11,7 +12,8 @@ public:
 
 	int width;
 	int height;
-	uint32_t* frameBuffer;
+	std::vector < uint32_t> frameBuffer;
 	std::vector < float > depthBuffer;
+	Texture texture;
 };
 

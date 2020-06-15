@@ -20,7 +20,7 @@
     - [ ] Russian Roulette
     - [ ] 纹理（Solid，Procedural，Cellular）
     - [ ] 反走样(SSAA, MSAA, TAA)
-    - [x] Depth of field
+    - [ ] Depth of field
     - [ ] light 光源（点光源，方向光，区域光，纹理光）
     - [ ] 物体（平面，三角形，球，四棱柱，圆柱，圆盘）
     - [ ] 加速数据结构（BVH）

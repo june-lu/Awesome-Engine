@@ -12,11 +12,11 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	renderContext = new RenderContext();
 	renderContext->width = sdlInterface->screenWidth;
 	renderContext->height = sdlInterface->screenHeight;
-	renderContext->frameBuffer = new uint32_t[sdlInterface->screenWidth * sdlInterface->screenHeight * 4];
+	renderContext->frameBuffer.resize(sdlInterface->screenWidth * sdlInterface->screenHeight * 4);
 	renderContext->depthBuffer.resize(sdlInterface->screenWidth * sdlInterface->screenHeight);
 
-
-	memset(renderContext->frameBuffer, 0x8f, renderContext->width * renderContext->height * 4);
+	//memset(renderContext->frameBuffer, 0x8f, renderContext->width * renderContext->height * 4);
+	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), std::numeric_limits<unsigned int>::max());
 	//memset(renderContext->depthBuffer, 0x7f, renderContext->width * renderContext->height * 4);
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::infinity());
 
@@ -27,7 +27,7 @@ RenderManager::~RenderManager()
 {
 }
 
-void RenderManager::DrawTriangleByBarycentricCoordinates(Color* color, Vector3f* pts, ShaderMode shadermodel)
+void RenderManager::DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShaderMode shadermodel)
 {
 	rasterizer->DrawTriangleByBarycentricCoordinates(color, pts, shadermodel);
 }

@@ -140,38 +140,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base\Color.cpp" />
-    <ClCompile Include="Base\Mathf.cpp" />
+    <ClCompile Include="Math\Mathf.cpp" />
     <ClCompile Include="Base\Mesh.cpp" />
     <ClCompile Include="Base\Model.cpp" />
     <ClCompile Include="Base\SDLInterface.cpp" />
     <ClCompile Include="Base\stb_image_write.cpp" />
     <ClCompile Include="Base\Texture.cpp" />
-    <ClCompile Include="Base\Vector2.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RenderSystem\RenderManager.cpp" />
     <ClCompile Include="RenderSystem\RenderContext.cpp" />
     <ClCompile Include="RenderSystem\Rasterizer.cpp" />
     <ClCompile Include="Base\Vertex.cpp" />
-    <ClCompile Include="Base\Vector3.cpp" />
     <ClCompile Include="RenderSystem\Shader.cpp" />
     <ClCompile Include="Base\stb_image.cpp" />
     <ClCompile Include="Base\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Color.h" />
-    <ClInclude Include="Base\Mathf.h" />
+    <ClInclude Include="Base\Vector.hpp" />
+    <ClInclude Include="Math\Mathf.h" />
     <ClInclude Include="Base\Mesh.h" />
     <ClInclude Include="Base\Model.h" />
     <ClInclude Include="Base\SDLInterface.h" />
     <ClInclude Include="Base\stb_image.h" />
     <ClInclude Include="Base\stb_image_write.h" />
     <ClInclude Include="Base\Texture.h" />
-    <ClInclude Include="Base\Vector2.h" />
     <ClInclude Include="RenderSystem\RenderManager.h" />
     <ClInclude Include="RenderSystem\RenderContext.h" />
     <ClInclude Include="RenderSystem\Rasterizer.h" />
     <ClInclude Include="Base\Vertex.h" />
-    <ClInclude Include="Base\Vector3.h" />
     <ClInclude Include="RenderSystem\Shader.h" />
     <ClInclude Include="Base\Triangle.h" />
   </ItemGroup>

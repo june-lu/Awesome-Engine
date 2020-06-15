@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "Mathf.h"
+#include "Math/Mathf.h"
 
 class Color
 {

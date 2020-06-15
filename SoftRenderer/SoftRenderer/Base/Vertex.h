@@ -1,6 +1,7 @@
 #pragma once
-#include "Vector2.h"
 #include "Color.h"
+#include "Vector.hpp"
+
 class Vertex
 {
 public:

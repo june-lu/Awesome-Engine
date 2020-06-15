@@ -144,7 +144,7 @@ void SDLInterface::SwapBuffer(RenderContext* renderContext)
 
 	SDL_LockTexture(mainRt, NULL, &mPixels, &mPitch);
 
-	memcpy(mPixels, renderContext->frameBuffer, surface->pitch * surface->h);
+	memcpy(mPixels, &(renderContext->frameBuffer[0]), surface->pitch * surface->h);
 
 	SDL_UnlockTexture(mainRt);
 

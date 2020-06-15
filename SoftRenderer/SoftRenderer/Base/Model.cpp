@@ -71,9 +71,6 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		
 		Vector2f texCoords;
 
-		/*std::cout << "position" << position <<std::endl;
-		std::cout << "normal" << normal <<std::endl;
-		std::cout << "texCoords" << texCoords <<std::endl;*/
 
 		if (mesh->mTextureCoords[0])
 		{
@@ -160,25 +157,12 @@ int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 
 	texture.height = height;
 	texture.width = width;
-	texture.mPixels = data;
-
-	/*std::cout << " fileName " << fileName << std::endl;
-	std::cout << " colors.size() " << colors.size() << std::endl;
-	std::cout << "width : " << width << std::endl;
-	std::cout << "height : " << height << std::endl;
-	std::cout << "nrComponents : " << nrComponents << std::endl;*/
 
 	for (int row = 0; row < height; row++)
 	{
 		for (int col = 0; col < width; col++)
 		{
 			int dataIndex = row * width * nrComponents + col * nrComponents;
-			/*data[dataIndex + 0] = 0;
-			data[dataIndex + 1] = 255;
-			data[dataIndex + 2] = 255;
-			data[dataIndex + 3] = 255;*/
-
-			//std::cout << "row * width + col : " << row * width + col << std::endl;
 
 			colors[row * width + col] = Color((float)data[dataIndex] / 255.0, (float)data[dataIndex + 1] / 255.0,
 				(float)data[dataIndex + 2] / 255.0, (float)data[dataIndex + 3] / 255.0);
@@ -187,33 +171,6 @@ int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 
 	textureID = Texture::textureArray.size();
 	Texture::textureArray.push_back(colors);
-
-	//write image
-//	stbi_write_png("write.png", width, height, nrComponents, data, width * nrComponents);
-
-	//for (int row = 0; row < height; row++)
-	//{
-	//	for (int col = 0; col < width; col++)
-	//	{
-	//		int dataIndex = row * width * nrComponents + col * nrComponents;
-	//		/*colors[row * width + col] = Color((float)data[dataIndex] / 255.0, (float)data[dataIndex + 1] / 255.0,
-	//			(float)data[dataIndex + 2] / 255.0, (float)data[dataIndex + 3] / 255.0);*/
-
-	//			/*std::cout << "dataIndex : " << dataIndex << std::endl;
-	//			std::cout << "index : " << row * width + col << std::endl;*/
-	//	}
-	//}
-
 	stbi_image_free(data);
-
-	//for (uint32_t i = 0; i < width * height ; i++)
-	//{
-	//	/*std::cout << "data[i] : " << (float)data[i] << std::endl;
-	//	std::cout << "data[i + 1] : " << (float)data[i + 1] << std::endl;
-	//	std::cout << "data[i + 2] : " << (float)data[i + 2] << std::endl;
-	//	std::cout << "data[i + 3] : " << (float)data[i + 3] << std::endl;*/
-	//	colors[i] = Color((float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0, (float)data[i] / 255.0);
-	//}
-	//std::cout << "height : " << height << std::endl;
 	return textureID;
 }

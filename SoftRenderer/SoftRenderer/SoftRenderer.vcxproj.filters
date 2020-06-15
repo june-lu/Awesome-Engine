@@ -21,22 +21,13 @@
     <ClCompile Include="Base\Color.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Mathf.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Base\SDLInterface.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\Vector2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem\Rasterizer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Base\Vertex.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\Vector3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem\RenderContext.cpp">
@@ -66,15 +57,12 @@
     <ClCompile Include="Base\Triangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Math\Mathf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Base\Vector2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Base\Color.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Base\Mathf.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Base\SDLInterface.h">
@@ -84,9 +72,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Base\Vertex.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Base\Vector3.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RenderSystem\RenderContext.h">
@@ -114,6 +99,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Base\Triangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Mathf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Vector.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
