@@ -1,5 +1,7 @@
 #pragma once
 #include "Base/Vector.hpp"
+#include "Base/Texture.h"
+
 class Shader
 {
 public:

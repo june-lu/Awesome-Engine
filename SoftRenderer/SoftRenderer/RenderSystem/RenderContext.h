@@ -3,6 +3,15 @@
 #include <iostream>
 #include <vector>
 #include "Base/Texture.h"
+#include "Base/Vertex.h"
+#include "Base/Triangle.h"
+
+enum ShadedMode
+{
+	Shaded,
+	Wireframe,
+	ShadedWireframe
+};
 
 class RenderContext
 {
@@ -12,8 +21,13 @@ public:
 
 	int width;
 	int height;
+	Texture texture;
+	ShadedMode shadedMode;
 	std::vector < uint32_t> frameBuffer;
 	std::vector < float > depthBuffer;
-	Texture texture;
+	std::vector<Vertex> vertices;
+	std::vector<uint32_t> indices;
+	std::vector<Texture> textures;
+	std::vector<Triangle> triangles;
 };
 

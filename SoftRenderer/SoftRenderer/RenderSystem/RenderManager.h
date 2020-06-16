@@ -16,9 +16,9 @@ public:
 	void SwapBuffer();
 	void RenderClear();
 	void handleEvents();
-	void DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShaderMode shadermodel = ShaderMode::Shaded);
-	void DrawTriangleByBarycentricCoordinates(std::vector<Texture> textures, Vertex* vertexs, ShaderMode shadermodel = ShaderMode::Shaded);
-	void DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures);
+	void DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedMode = ShadedMode::Shaded);
+	void DrawTriangleByBarycentricCoordinates(std::vector<Texture> textures, Vertex* vertexs, ShadedMode shadedMode = ShadedMode::Shaded);
+	void DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode = ShadedMode::Shaded);
 
 	SDLInterface* sdlInterface;
 	RenderContext* renderContext;

@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <cassert>
 
 template <typename T>
@@ -6,6 +7,9 @@ class Vector2;
 
 template <typename T>
 class Vector3;
+
+template <typename T>
+class Vector4;
 
 template <typename T>
 class Vector2
@@ -114,6 +118,7 @@ public:
 
 	Vector3() :x(0), y(0) {};
 	Vector3(const T& _x, const T& _y, const T& _z) :x(_x), y(_y), z(_z) {};
+	Vector3(const Vector4<T> & v) :x(v.x), y(v.y), z(v.z) {};
 	Vector3(const Vector3<T> & v) :x(v.x), y(v.y), z(v.z) {};
 	Vector3(const Vector2<T> & v) :x(v.x), y(v.y), z(0) {};
 	~Vector3() {};
@@ -245,3 +250,122 @@ template <typename T, typename U>
 inline Vector3<T> operator*(const U u, const Vector3<T> &v) {
 	return v * u;
 }
+
+
+
+template <typename T>
+class Vector4
+{
+public:
+
+	T x, y, z, w;
+	static Vector4<T> zero;
+	static Vector4<T> one;
+	static Vector4<T> left;
+	static Vector4<T> right;
+	static Vector4<T> up;
+	static Vector4<T> down;
+
+	Vector4() :x(0), y(0) {};
+	Vector4(const T& _x, const T& _y, const T& _z, const T& _w) :x(_x), y(_y), z(_z), w(_w) {};
+	Vector4(const Vector4<T> & v) :x(v.x), y(v.y), z(v.z), w(v.w) {};
+	Vector4(const Vector3<T> & v) :x(v.x), y(v.y), z(v.z), w(1.0) {};
+	~Vector4() {};
+
+	Vector4<T>& operator=(const Vector4<T>& v)
+	{
+		x = v.x;
+		y = v.y;
+		z = v.z;
+		w = v.w;
+		return *this;
+	}
+
+	bool operator==(const Vector4<T> &v) const { return x == v.x_ && y == v.y && z == v.z&& w == v.w; }
+	bool operator!=(const Vector4<T> &v) const { return !operator==(v); }
+
+	Vector4<T> operator+(const Vector4<T> &v) const {
+		return Vector4<T>(x + v.x, y + v.y, z + v.z, w + v.w);
+	}
+	Vector4<T>& operator+=(const Vector4<T> &v) {
+		x += v.x;
+		y += v.y;
+		z += v.z;
+		w += v.w;
+		return *this;
+	}
+	Vector4<T> operator-(const Vector4<T> &v) const {
+		return Vector4<T>(x - v.x, y - v.y, z - v.z, w - v.w);
+	}
+	Vector4<T>& operator-=(const Vector4<T> &v) {
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+		w -= v.w;
+		return *this;
+	}
+
+	Vector4<T> operator*(const Vector4<T> &v) const {
+		return Vector4<T>(x * v.x, y * v.y, z * v.z, w * v.w);
+	}
+
+	template <typename U>
+	Vector4<T> operator*(const U u) const {
+		return Vector4<T>(x * u, y * u, z * u, w * u);
+	}
+	template <typename U>
+	Vector4<T>& operator*=(const U u) {
+		x *= u;
+		y *= u;
+		z *= u;
+		w *= u;
+		return *this;
+	}
+	template <typename U>
+	Vector4<T> operator/(const U u) const {
+		double inv = 1.0 / u;
+		return Vector4<T>(x * inv, y * inv, z * inv, w * inv);
+	}
+	template <typename U>
+	Vector4<T>& operator/=(const U u) {
+		double inv = 1.0 / u;
+		x *= inv;
+		y *= inv;
+		z *= inv;
+		w *= inv;
+		return *this;
+	}
+
+	Vector4<T> operator-() const { return Vector4<T>(-x, -y, -z, -w); }
+
+	const T& operator[](const int i) const {
+		assert(i >= 0 && i < 3);
+		if (i == 0) return x;
+		if (i == 1) return y;
+		if (i == 2) return z;
+		return w;
+	}
+	T& operator[](const int i) {
+		assert(i >= 0 && i < 3);
+		if (i == 0) return x;
+		if (i == 1) return y;
+		if (i == 2) return z;
+		return w;
+	}
+
+	friend std::ostream& operator<<(std::ostream &os, const Vector4<T> &v) {
+		return os << std::setw(8) << v.x << " "
+			<< std::setw(8) << v.y << " "
+			<< std::setw(8) << v.z << " "
+			<< std::setw(8) << v.w << std::endl;
+	}
+
+	static inline Vector4<T> Lerp(const Vector4<T> &v1, const Vector4<T> &v2, float factor)
+	{
+		return v1 + (v2 - v1) * factor;
+	}
+};
+
+typedef Vector4<double> Vector4d;
+typedef Vector4<float> Vector4f;
+typedef Vector4<int> Vector4i;
