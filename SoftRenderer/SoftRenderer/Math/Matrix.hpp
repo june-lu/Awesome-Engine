@@ -1,3 +1,4 @@
+#pragma once
 #include "Mathf.h"
 
 template<typename T>
@@ -5,13 +6,14 @@ class Matrix2
 {
 public:
 	static Matrix2<T> Identity;
-	Matrix2<T>(T m00, T m10, T m01, T m11) {
+	Matrix2() {};
+	Matrix2(T m00, T m10, T m01, T m11) {
 		m[0][0] = m00;
 		m[1][0] = m10;
 		m[0][1] = m01;
 		m[1][1] = m11;
 	}
-	~Matrix2<T>() {};
+	~Matrix2() {};
 
 	Matrix2<T> rotate2(const double)
 	{
@@ -31,16 +33,18 @@ typedef Matrix2<int> Matrix2i;
 typedef Matrix2<float> Matrix2f;
 typedef Matrix2<double> Matrix2d;
 
-Matrix2d Matrix2d::Identity(
+Matrix2f Matrix2f::Identity(
 	1, 0,
 	0, 1);
+
 
 template<typename T>
 class Matrix4
 {
 public:
 	static Matrix4<T> Identity;
-	Matrix4<T>(Vector4d row1, Vector4d row2, Vector4d row3, Vector4d row4)
+	Matrix4() {};
+	Matrix4(Vector4d row1, Vector4d row2, Vector4d row3, Vector4d row4)
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -50,7 +54,7 @@ public:
 			}
 		}
 	}
-	Matrix4<T>(T m00, T m10, T m20, T m30,
+	Matrix4(T m00, T m10, T m20, T m30,
 		T m01, T m11, T m21, T m31,
 		T m02, T m12, T m22, T m32,
 		T m03, T m13, T m23, T m33)
@@ -60,12 +64,12 @@ public:
 			m[0][2] = m02; m[1][2] = m12, m[2][2] = m22, m[3][2] = m32,
 			m[0][3] = m03; m[1][3] = m13, m[2][3] = m23, m[3][3] = m33;
 	}
-	Matrix4<T>(const Matrix4<T>& mat)
+	Matrix4(const Matrix4<T>& mat)
 	{
 		memcpy(m, mat.m, sizeof(T) * 16);
 	}
 
-	~Matrix4<T>() {};
+	~Matrix4() {};
 
 	Matrix4<T>& operator=(const Matrix4<T>& mat)
 	{
@@ -103,6 +107,13 @@ public:
 	Matrix4<T>& operator*=(const Matrix4<T>& mat)
 	{
 		return *this = operator*(mat);
+	}
+
+	inline Vector3<T> operator()(const Vector3<T> &p) const {
+		double x = m[0][0] * p.x + m[1][0] * p.y + m[2][0] * p.z + m[3][0];
+		double y = m[0][1] * p.x + m[1][1] * p.y + m[2][1] * p.z + m[3][1];
+		double z = m[0][2] * p.x + m[1][2] * p.y + m[2][2] * p.z + m[3][2];
+		return Vector3<T>(x, y, z);
 	}
 
 	//用余子式、代数余子式和伴随来求逆矩阵
@@ -241,10 +252,10 @@ public:
 		double sin = Mathf::Sin(rad);
 
 		return Matrix4<T>(
-			1,   0,    0, 0,
+			1, 0, 0, 0,
 			0, cos, -sin, 0,
-			0, sin,  cos, 0,
-			0,   0,    0, 1);
+			0, sin, cos, 0,
+			0, 0, 0, 1);
 	}
 
 	Matrix4<T> RotateY(const double angle)
@@ -255,9 +266,9 @@ public:
 
 		return Matrix4<T>(
 			cos, 0, sin, 0,
-			0,   1,   0, 0,
+			0, 1, 0, 0,
 			-sin, 0, cos, 0,
-			0,   0,   0, 1);
+			0, 0, 0, 1);
 	}
 
 	Matrix4<T> RotateZ(const double angle)
@@ -268,9 +279,9 @@ public:
 
 		return Matrix4<T>(
 			cos, -sin, 0, 0,
-			sin,  cos, 0, 0,
-			0,      0, 1, 0,
-			0,      0, 0, 1);
+			sin, cos, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1);
 	}
 
 	Matrix4<T> Transform(const Vector3<T> &v)
@@ -280,7 +291,7 @@ public:
 			0, 1, 0, v.y,
 			0, 0, 1, v.z,
 			0, 0, 0, 1);
-	} 
+	}
 
 	Matrix4<T> scale(const double x, const double y, const double z)
 	{
@@ -290,22 +301,18 @@ public:
 			0, 0, z, 0,
 			0, 0, 0, 1);
 	}
-	Matrix4<T> perspective(const double, const double, const double)
-	{
-
-	}
 
 private:
-	
+
 	union {
 		T m[4][4];
 		T _m[16];
 	};
 };
 
-typedef Matrix4<double> Matrix4d;
+typedef Matrix4<float> Matrix4f;
 
-Matrix4d Matrix4d::Identity(
+Matrix4f Matrix4f::Identity(
 	1, 0, 0, 0,
 	0, 1, 0, 0,
 	0, 0, 1, 0,

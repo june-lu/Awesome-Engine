@@ -6,6 +6,35 @@ RenderManager::RenderManager()
 {
 }
 
+RenderManager::~RenderManager()
+{
+}
+
+Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
+{
+	Matrix4f model(Matrix4f::Identity);
+	model = model.RotateX(angle.x);
+	model = model.RotateY(angle.y);
+	model = model.RotateZ(angle.z);
+	model = model.scale(scale.x, scale.y, scale.z);
+	model = model.Transform(transform);
+	return model;
+}
+
+Matrix4f GetViewMatrix(Vector3f eyePos)
+{
+	Matrix4f view(Matrix4f::Identity);
+
+	return view;
+}
+
+Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float zNear, float zFar)
+{
+	Matrix4f projection(Matrix4f::Identity);
+
+	return projection;
+}
+
 RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 {
 	sdlInterface = new SDLInterface(_windowName, _width, _height);
@@ -19,11 +48,18 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::infinity());
 
 	rasterizer = new Rasterizer(renderContext);
+
+	Vector3f angle(0, 150, 0);
+	Vector3f scale(38, 38, 38);
+	Vector3f transform = Vector3f::right * (renderContext->width / 2);
+	Vector3f eye_pos = { 0, 0, 10 };
+
+	rasterizer->set_model(GetModelMatrix(angle, scale, transform));
+	rasterizer->set_view(GetViewMatrix(eye_pos));
+	rasterizer->set_projection(GetProjectionMatrix(45.0, 1, 0.1, 50));
 }
 
-RenderManager::~RenderManager()
-{
-}
+
 
 void RenderManager::DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedmodel)
 {

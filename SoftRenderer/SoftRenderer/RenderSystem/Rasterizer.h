@@ -22,9 +22,9 @@ public:
 	void DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedMode = ShadedMode::Shaded);
 	void DrawTriangleByBarycentricCoordinates();
 
-	void set_model(const Matrix4d& m);
-	void set_view(const Matrix4d& v);
-	void set_projection(const Matrix4d& p);
+	void set_model(const Matrix4f& m);
+	void set_view(const Matrix4f& v);
+	void set_projection(const Matrix4f& p);
 
 	void set_texture(Texture tex) { renderContext->texture = tex; }
 

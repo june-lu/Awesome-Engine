@@ -153,16 +153,14 @@ public:
 		return *this;
 	}
 
-	Vector3<T> operator*(const Vector3<T> &v) const {
+	Vector3<T> operator* (const Vector3<T> &v) const {
 		return Vector3<T>(x * v.x, y * v.y, z * v.z);
 	}
 
-	template <typename U>
-	Vector3<T> operator*(const U u) const {
+	Vector3<T> operator * (const float u) const {
 		return Vector3<T>(x * u, y * u, z * u);
 	}
-	template <typename U>
-	Vector3<T>& operator*=(const U u) {
+	Vector3<T>& operator*=(const float u) {
 		x *= u;
 		y *= u;
 		z *= u;
@@ -246,8 +244,8 @@ inline Vector3<T> Cross(Vector3<T> lhs, Vector3<T> rhs)
 		lhs.x * rhs.y - lhs.y * rhs.x);
 }
 
-template <typename T, typename U>
-inline Vector3<T> operator*(const U u, const Vector3<T> &v) {
+template <typename T>
+inline Vector3<T> operator*(const float u, const Vector3<T> &v) {
 	return v * u;
 }
 

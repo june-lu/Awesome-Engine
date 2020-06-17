@@ -5,6 +5,7 @@
 #include "Base/Texture.h"
 #include "Base/Vertex.h"
 #include "Base/Triangle.h"
+#include "Math/Matrix.hpp"
 
 enum ShadedMode
 {
@@ -21,6 +22,7 @@ public:
 
 	int width;
 	int height;
+
 	Texture texture;
 	ShadedMode shadedMode;
 	std::vector < uint32_t> frameBuffer;
@@ -29,5 +31,9 @@ public:
 	std::vector<uint32_t> indices;
 	std::vector<Texture> textures;
 	std::vector<Triangle> triangles;
+
+	Matrix4f model;
+	Matrix4f view;
+	Matrix4f projection;
 };
 
