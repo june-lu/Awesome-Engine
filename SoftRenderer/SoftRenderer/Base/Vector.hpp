@@ -199,7 +199,7 @@ public:
 
 	Vector3<T> RotationY(int angle)
 	{
-		float radian = (float)angle * Mathf::Pi / 180.0;
+		float radian = (float)angle * Mathf::Deg2Rad;
 		return Vector3<T>(x * Mathf::Cos(radian) - z * Mathf::Sin(radian), y, x * Mathf::Sin(radian) - z * Mathf::Cos(radian));
 	}
 

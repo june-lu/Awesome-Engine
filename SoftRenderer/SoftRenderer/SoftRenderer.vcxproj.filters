@@ -60,9 +60,6 @@
     <ClCompile Include="Math\Mathf.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Matrix.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Color.h">
@@ -110,7 +107,7 @@
     <ClInclude Include="Base\Vector.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Matrix.h">
+    <ClInclude Include="Math\Matrix.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
