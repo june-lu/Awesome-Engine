@@ -33,8 +33,11 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float zNear, flo
 {
 	Matrix4f projection(Matrix4f::Identity);
 	float tanFov = Mathf::Tan(eye_fov * Mathf::Deg2Rad * 0.5f);
-	float t = zNear * tanFov;
-	float l = t * aspect_ratio;
+	float bottom = tanFov * zNear;
+	float top = -bottom;
+
+	float right = top * aspect_ratio;
+	float left = -right;
 
 	Matrix4f persp2orthoMat(
 		zNear, 0, 0, 0,
@@ -44,19 +47,19 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float zNear, flo
 
 	projection *= persp2orthoMat;
 	std::cout << projection << std::endl;
-	projection.scale(Vector3f(1.0 / l, 1.0 / t, 2.0 / (zFar - zNear)));
+	projection.scale(Vector3f(1.0 / left, 1.0 / bottom, 2.0 / (zFar - zNear)));
 	std::cout << projection << std::endl;
-	Vector3f originPos(1,1,1);
+	Vector3f originPos(1, 1, 1);
 	std::cout << projection(originPos) << std::endl;
 	return projection;
 }
 
-Matrix4f GetViewPortMatrix(int width, int height)
+Matrix4f GetViewPortMatrix(int width, int height, float zNear, float zFar)
 {
 	Matrix4f viewport(
 		width * 0.5, 0, 0, width * 0.5,
 		0, height * 0.5, 0, height * 0.5,
-		0, 0, 1, 0,
+		0, 0, (zFar - zNear) / 2.0, (zFar + zNear) / 2.0,
 		0, 0, 0, 1);
 	return viewport;
 }
@@ -75,15 +78,15 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	rasterizer = new Rasterizer(renderContext);
 
-	Vector3f angle(0, 0, 0);
-	Vector3f scale(100, 100, 100);
-	Vector3f transform = Vector3f::left * (_width / 2);
+	Vector3f angle(0, 30, 0);
+	Vector3f scale(30, 30, 30);
+	Vector3f transform = Vector3f(renderContext->width / 2, renderContext->height / 2, 0);
 	Vector3f eye_pos = { 0, 0, 10 };
 
 	rasterizer->set_model(GetModelMatrix(angle, scale, transform));
 	rasterizer->set_view(GetViewMatrix(eye_pos));
 	rasterizer->set_projection(GetProjectionMatrix(45.0, 1, 0.1, 50));
-	rasterizer->set_viewport(GetViewPortMatrix(_width, _height));
+	rasterizer->set_viewport(GetViewPortMatrix(_width, _height, 0.1, 50));
 }
 
 
