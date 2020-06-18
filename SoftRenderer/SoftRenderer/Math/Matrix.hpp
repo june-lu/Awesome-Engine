@@ -54,15 +54,15 @@ public:
 			}
 		}
 	}
-	Matrix4(T m00, T m10, T m20, T m30,
-		T m01, T m11, T m21, T m31,
-		T m02, T m12, T m22, T m32,
-		T m03, T m13, T m23, T m33)
+	Matrix4(T m00, T m01, T m02, T m03,
+		T m10, T m11, T m12, T m13,
+		T m20, T m21, T m22, T m23,
+		T m30, T m31, T m32, T m33)
 	{
-		m[0][0] = m00, m[1][0] = m10, m[2][0] = m20, m[3][0] = m30,
-			m[0][1] = m01; m[1][1] = m11, m[2][1] = m21, m[3][1] = m31,
-			m[0][2] = m02; m[1][2] = m12, m[2][2] = m22, m[3][2] = m32,
-			m[0][3] = m03; m[1][3] = m13, m[2][3] = m23, m[3][3] = m33;
+		m[0][0] = m00, m[0][1] = m01, m[0][2] = m02, m[0][3] = m03,
+			m[1][0] = m10; m[1][1] = m11, m[1][2] = m12, m[1][3] = m13,
+			m[2][0] = m20; m[2][1] = m21, m[2][2] = m22, m[2][3] = m23,
+			m[3][0] = m30; m[3][1] = m31, m[3][2] = m32, m[3][3] = m33;
 	}
 	Matrix4(const Matrix4<T>& mat)
 	{
@@ -97,7 +97,7 @@ public:
 				res.m[i][j] = 0;
 				for (int k = 0; k < 4; k++)
 				{
-					res.m[i][j] += res.m[i][k] * mat.m[k][j];
+					res.m[i][j] += m[i][k] * mat.m[k][j];
 				}
 			}
 		}
@@ -109,10 +109,17 @@ public:
 		return *this = operator*(mat);
 	}
 
+	friend std::ostream& operator<<(std::ostream &os, const Matrix4<T> &mat) {
+		return os << mat.m[0][0] << "\t" << mat.m[0][1] << "\t" << mat.m[0][2] << "\t" << mat.m[0][3] << "\n" <<
+			mat.m[1][0] << "\t" << mat.m[1][1] << "\t" << mat.m[1][2] << "\t" << mat.m[1][3] << "\n" <<
+			mat.m[2][0] << "\t" << mat.m[2][1] << "\t" << mat.m[2][2] << "\t" << mat.m[2][3] << "\n" <<
+			mat.m[3][0] << "\t" << mat.m[3][1] << "\t" << mat.m[3][2] << "\t" << mat.m[3][3] << "\n";
+	}
+
 	inline Vector3<T> operator()(const Vector3<T> &p) const {
-		double x = m[0][0] * p.x + m[1][0] * p.y + m[2][0] * p.z + m[3][0];
-		double y = m[0][1] * p.x + m[1][1] * p.y + m[2][1] * p.z + m[3][1];
-		double z = m[0][2] * p.x + m[1][2] * p.y + m[2][2] * p.z + m[3][2];
+		double x = m[0][0] * p.x + m[0][1] * p.y + m[0][2] * p.z + m[0][3];
+		double y = m[1][0] * p.x + m[1][1] * p.y + m[1][2] * p.z + m[1][3];
+		double z = m[2][0] * p.x + m[2][1] * p.y + m[2][2] * p.z + m[2][3];
 		return Vector3<T>(x, y, z);
 	}
 
@@ -245,64 +252,71 @@ public:
 		return ret;
 	}
 
-	Matrix4<T> RotateX(const double angle)
+	void RotateX(const double angle)
 	{
 		double rad = angle * Mathf::Deg2Rad;
 		double cos = Mathf::Cos(rad);
 		double sin = Mathf::Sin(rad);
 
-		return Matrix4<T>(
+		Matrix4<T> rotateMat = Matrix4<T>(
 			1, 0, 0, 0,
 			0, cos, -sin, 0,
 			0, sin, cos, 0,
 			0, 0, 0, 1);
+
+		*this *= rotateMat;
 	}
 
-	Matrix4<T> RotateY(const double angle)
+	void RotateY(const double angle)
 	{
 		double rad = angle * Mathf::Deg2Rad;
 		double cos = Mathf::Cos(rad);
 		double sin = Mathf::Sin(rad);
 
-		return Matrix4<T>(
+		Matrix4<T> rotateMat = Matrix4<T>(
 			cos, 0, sin, 0,
 			0, 1, 0, 0,
 			-sin, 0, cos, 0,
 			0, 0, 0, 1);
+
+		*this *= rotateMat;
 	}
 
-	Matrix4<T> RotateZ(const double angle)
+	void RotateZ(const double angle)
 	{
 		double rad = angle * Mathf::Deg2Rad;
 		double cos = Mathf::Cos(rad);
 		double sin = Mathf::Sin(rad);
 
-		return Matrix4<T>(
+		Matrix4<T> rotateMat = Matrix4<T>(
 			cos, -sin, 0, 0,
 			sin, cos, 0, 0,
 			0, 0, 1, 0,
 			0, 0, 0, 1);
+
+		*this *= rotateMat;
 	}
 
-	Matrix4<T> Transform(const Vector3<T> &v)
+	void Transform(const Vector3<T> &v)
 	{
-		return Matrix4<T>(
+		Matrix4<T> tranMat = Matrix4<T>(
 			1, 0, 0, v.x,
 			0, 1, 0, v.y,
 			0, 0, 1, v.z,
 			0, 0, 0, 1);
+
+		*this *= tranMat;
 	}
 
-	Matrix4<T> scale(const double x, const double y, const double z)
+	void scale(const Vector3<T> &v)
 	{
-		return Matrix4<T>(
-			x, 0, 0, 0,
-			0, y, 0, 0,
-			0, 0, z, 0,
+		Matrix4<T> scaleMat = Matrix4<T>(
+			v.x, 0, 0, 0,
+			0, v.y, 0, 0,
+			0, 0, v.z, 0,
 			0, 0, 0, 1);
+		*this *= scaleMat;
 	}
-
-private:
 
 	union {
 		T m[4][4];
@@ -317,3 +331,5 @@ Matrix4f Matrix4f::Identity(
 	0, 1, 0, 0,
 	0, 0, 1, 0,
 	0, 0, 0, 1);
+
+

@@ -25,6 +25,7 @@ public:
 	void set_model(const Matrix4f& m);
 	void set_view(const Matrix4f& v);
 	void set_projection(const Matrix4f& p);
+	void set_viewport(const Matrix4f& vp);
 
 	void set_texture(Texture tex) { renderContext->texture = tex; }
 

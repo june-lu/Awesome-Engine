@@ -35,5 +35,6 @@ public:
 	Matrix4f model;
 	Matrix4f view;
 	Matrix4f projection;
+	Matrix4f viewport;
 };
 

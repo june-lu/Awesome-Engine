@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cassert>
+#include <iomanip> 
 
 template <typename T>
 class Vector2;
@@ -88,7 +89,7 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream &os, const Vector2<T> &v) {
-		return os << std::setw(8) << v.x << " "
+		return os << v.x << " "
 			<< std::setw(8) << v.y << std::endl;
 	}
 
@@ -202,7 +203,7 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream &os, const Vector3<T> &v) {
-		return os << std::setw(8) << v.x << " "
+		return os << v.x << " "
 			<< std::setw(8) << v.y << " "
 			<< std::setw(8) << v.z << std::endl;
 	}
