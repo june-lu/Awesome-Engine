@@ -1,5 +1,5 @@
-### 模型导入
-![image](SoftRenderer/Screenshots/Result.png)
+### 透视效果
+![image](SoftRenderer/Screenshots/perspectiveResult.png)
 ### 待实现的功能
 - [ ] Editor
     - [ ] Scene Serialization
@@ -37,3 +37,4 @@
 - [如何写一个软渲染[拳四郎]](https://zhuanlan.zhihu.com/p/42725758)
 - [如何开始用 C++ 写一个光栅化渲染器？](https://www.zhihu.com/question/24786878/answer/127484388) 
 - [Tiny renderer or how OpenGL works: software rendering in 500 lines of code](https://github.com/ssloy/tinyrenderer/wiki)
+- [Scratchapixel](https://www.scratchapixel.com/index.php)

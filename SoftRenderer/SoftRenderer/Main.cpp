@@ -2,7 +2,7 @@
 #include "Base/Model.h"
 int main(int argc, char *argv[])
 {
-	RenderManager* renderManager = new RenderManager("SoftRender", 1000, 800);
+	RenderManager* renderManager = new RenderManager("SoftRender", 800, 600);
 
 	//Vector2f center(400, 300);
 	//int length = 50;
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	//renderManager->DrawTriangleByBarycentricCoordinates(&Color::blue, t3, ShaderMode::ShadedWireframe);
 
 	Shader shader;
-	Model model("ModelData/Crate/Crate1.obj", renderManager);
+	Model model("ModelData/nanosuit.obj", renderManager);
 	renderManager->RenderClear();
 	model.Draw(&shader);
 

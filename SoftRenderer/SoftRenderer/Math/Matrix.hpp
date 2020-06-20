@@ -120,7 +120,8 @@ public:
 		double x = m[0][0] * p.x + m[0][1] * p.y + m[0][2] * p.z + m[0][3];
 		double y = m[1][0] * p.x + m[1][1] * p.y + m[1][2] * p.z + m[1][3];
 		double z = m[2][0] * p.x + m[2][1] * p.y + m[2][2] * p.z + m[2][3];
-		return Vector3<T>(x, y, z);
+		double w = m[3][0] * p.x + m[3][1] * p.y + m[3][2] * p.z + m[3][3];
+		return Vector3<T>(x/ w, y/ w, z/ w);
 	}
 
 	inline Vector4<T> operator()(const Vector4<T> &p) const {

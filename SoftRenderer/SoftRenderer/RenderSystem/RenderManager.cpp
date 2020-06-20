@@ -22,35 +22,49 @@ Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
 	return model;
 }
 
-Matrix4f GetViewMatrix(Vector3f eyePos)
+Matrix4f GetViewMatrix(Vector3f eyePos, Vector3f lookAt_direction, Vector3f up_direction)
 {
 	Matrix4f view(Matrix4f::Identity);
 	view.Transform(-1 * eyePos);
+	Vector3f lookAt2Up = Cross(lookAt_direction, up_direction);
+	Matrix4f viewMat(
+		lookAt2Up.x, up_direction.x, lookAt_direction.x, 0,
+		lookAt2Up.y, up_direction.y, lookAt_direction.y, 0,
+		lookAt2Up.z, up_direction.z, lookAt_direction.z, 0,
+		0, 0, 0, 1);
+
+	view = viewMat * view;
 	return view;
 }
 
-Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float zNear, float zFar)
+Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f)
 {
 	Matrix4f projection(Matrix4f::Identity);
 	float tanFov = Mathf::Tan(eye_fov * Mathf::Deg2Rad * 0.5f);
-	float bottom = tanFov * zNear;
-	float top = -bottom;
+	float t = tanFov * n;
+	float b = -t;
 
-	float right = top * aspect_ratio;
-	float left = -right;
+	float r = t * aspect_ratio;
+	float l = -r;
 
-	Matrix4f persp2orthoMat(
-		zNear, 0, 0, 0,
-		0, zNear, 0, 0,
-		0, 0, zNear + zFar, -zNear * zFar,
+	//Matrix4f persp2orthoMat(
+	//	zNear, 0, 0, 0,
+	//	0, zNear, 0, 0,
+	//	0, 0, zNear + zFar, -zNear * zFar,
+	//	0, 0, 1, 0);
+
+	projection = Matrix4f(
+		2 * n / (r - l), 0, -(r + l) / (r - l), 0,
+		0, 2 * n / (t - b), -(t + b) / (t - b), 0,
+		0, 0, (n + f) / (n - f), (-2 * n * f) / (n - f),
 		0, 0, 1, 0);
 
-	projection *= persp2orthoMat;
-	std::cout << projection << std::endl;
-	projection.scale(Vector3f(1.0 / left, 1.0 / bottom, 2.0 / (zFar - zNear)));
-	std::cout << projection << std::endl;
-	Vector3f originPos(1, 1, 1);
-	std::cout << projection(originPos) << std::endl;
+	//projection *= persp2orthoMat;
+	//std::cout << projection << std::endl;
+	//projection.scale(Vector3f(1.0 / left, 1.0 / bottom, 2.0 / (zFar - zNear)));
+	//std::cout << projection << std::endl;
+	/*Vector3f originPos(1, 1, 1);
+	std::cout << projection(originPos) << std::endl;*/
 	return projection;
 }
 
@@ -79,13 +93,15 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	rasterizer = new Rasterizer(renderContext);
 
 	Vector3f angle(0, 30, 0);
-	Vector3f scale(30, 30, 30);
-	Vector3f transform = Vector3f(renderContext->width / 2, renderContext->height / 2, 0);
-	Vector3f eye_pos = { 0, 0, 10 };
+	Vector3f scale(4, 4, 4);
+	Vector3f transform = Vector3f(0, -30, 0);
+	Vector3f eye_pos = { 0, 0, 60 };
+	Vector3f lookAt_direction = { 0, 0, 1 };
+	Vector3f up_direction = { 0, 1, 0 };
 
 	rasterizer->set_model(GetModelMatrix(angle, scale, transform));
-	rasterizer->set_view(GetViewMatrix(eye_pos));
-	rasterizer->set_projection(GetProjectionMatrix(45.0, 1, 0.1, 50));
+	rasterizer->set_view(GetViewMatrix(eye_pos, lookAt_direction, up_direction));
+	rasterizer->set_projection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
 	rasterizer->set_viewport(GetViewPortMatrix(_width, _height, 0.1, 50));
 }
 
