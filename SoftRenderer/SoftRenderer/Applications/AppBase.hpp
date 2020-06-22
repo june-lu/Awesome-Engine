@@ -9,9 +9,11 @@ public:
 	{
 		renderManager = new RenderManager(appName.c_str(), appWidth, appHeight);
 	}
-	~AppBase() {};
+	~AppBase() {}
 
+	virtual void Init() = 0;
 	virtual void Run() = 0;
+	virtual void Release() = 0;
 
 
 protected:

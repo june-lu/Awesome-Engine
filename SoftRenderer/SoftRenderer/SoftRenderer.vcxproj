@@ -104,7 +104,7 @@
     <Link>
       <AdditionalDependencies>assimp-vc141-mtd.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>.\ThirdParty\Assimp-5.0.1\lib\x64;.\ThirdParty\SDL2-2.0.12\lib\x64</AdditionalLibraryDirectories>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <AdditionalOptions>/machine:X64 /debug %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -155,6 +155,7 @@
     <ClCompile Include="Applications\AppBase.hpp" />
     <ClCompile Include="Applications\ModelImportApp.hpp" />
     <ClCompile Include="Base\Color.cpp" />
+    <ClCompile Include="Base\Camera.cpp" />
     <ClCompile Include="Math\Mathf.cpp" />
     <ClCompile Include="Base\Mesh.cpp" />
     <ClCompile Include="Base\Model.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Base\Color.h" />
     <ClInclude Include="Base\Vector.hpp" />
+    <ClInclude Include="Base\Camera.h" />
     <ClInclude Include="Math\Mathf.h" />
     <ClInclude Include="Base\Mesh.h" />
     <ClInclude Include="Base\Model.h" />

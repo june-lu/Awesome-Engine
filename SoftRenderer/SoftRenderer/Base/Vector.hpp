@@ -116,6 +116,8 @@ public:
 	static Vector3<T> right;
 	static Vector3<T> up;
 	static Vector3<T> down;
+	static Vector3<T> front;
+	static Vector3<T> back;
 
 	Vector3() :x(0), y(0) {};
 	Vector3(const T& _x, const T& _y, const T& _z) :x(_x), y(_y), z(_z) {};
@@ -230,6 +232,8 @@ Vector3f Vector3f::left(-1, 0, 0);
 Vector3f Vector3f::right(1, 0, 0);
 Vector3f Vector3f::up(0, 1, 0);
 Vector3f Vector3f::down(0, -1, 0);
+Vector3f Vector3f::front(0, 0, -1);
+Vector3f Vector3f::back(0, 0, 1);
 
 template <typename T>
 inline Vector3<T> Cross(Vector3<T> lhs, Vector3<T> rhs)

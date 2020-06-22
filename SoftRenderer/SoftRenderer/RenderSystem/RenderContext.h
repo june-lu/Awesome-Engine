@@ -6,6 +6,7 @@
 #include "Base/Vertex.h"
 #include "Base/Triangle.h"
 #include "Math/Matrix.hpp"
+#include "Base/Camera.h"
 
 enum ShadedMode
 {
@@ -23,6 +24,7 @@ public:
 	int width;
 	int height;
 
+	Camera camera;
 	Texture texture;
 	ShadedMode shadedMode;
 	std::vector < uint32_t> frameBuffer;

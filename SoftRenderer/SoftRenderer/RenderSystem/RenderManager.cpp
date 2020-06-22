@@ -95,12 +95,10 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	Vector3f angle(0, 30, 0);
 	Vector3f scale(4, 4, 4);
 	Vector3f transform = Vector3f(0, -30, 0);
-	Vector3f eye_pos = { 0, 0, 60 };
-	Vector3f lookAt_direction = { 0, 0, 1 };
-	Vector3f up_direction = { 0, 1, 0 };
+	
 
 	rasterizer->set_model(GetModelMatrix(angle, scale, transform));
-	rasterizer->set_view(GetViewMatrix(eye_pos, lookAt_direction, up_direction));
+	
 	rasterizer->set_projection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
 	rasterizer->set_viewport(GetViewPortMatrix(_width, _height, 0.1, 50));
 }
@@ -147,4 +145,14 @@ void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t>
 		renderContext->triangles.push_back(triangle);
 	}
 	rasterizer->DrawTriangleByBarycentricCoordinates();
+}
+
+void RenderManager::SetCamera(Camera& camera)
+{
+	renderContext->camera = camera;
+	Vector3f eye_pos = camera.GetCameraPosition();// { 0, 0, 60 };
+	Vector3f lookAt_direction = camera.GetCameraForwardDirection(); //{ 0, 0, 1 };
+	Vector3f up_direction = camera.GetCameraUpDirection();//{ 0, 1, 0 };
+
+	rasterizer->set_view(GetViewMatrix(eye_pos, lookAt_direction, up_direction));
 }

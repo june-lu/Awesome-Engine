@@ -69,6 +69,9 @@
     <ClCompile Include="Base\Time.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Base\Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Color.h">
@@ -120,6 +123,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Base\Time.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

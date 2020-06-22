@@ -1,15 +1,31 @@
 #pragma once
 #include "AppBase.hpp"
 #include "Base/Model.h"
+#include "Base/Camera.h"
 
 class ModelImportApp : public AppBase
 {
 public:
-	ModelImportApp(std::string appName, int appWidth, int appHeight) :AppBase(appName, appWidth, appHeight) {};
+	ModelImportApp(std::string appName, int appWidth, int appHeight)
+		:AppBase(appName, appWidth, appHeight)
+	{
+	}
+
+	void Init()
+	{
+		model = Model("ModelData/nanosuit.obj", renderManager);
+		camera = new Camera({ 0, 0, 60 }, { 0, 1, 0 }, { 0, 0, 1 });
+		renderManager->SetCamera(*camera);
+	}
+
+	~ModelImportApp()
+	{
+		Release();
+	}
+
 	void Run()
 	{
-		Shader shader;
-		Model model("ModelData/nanosuit.obj", renderManager);
+
 		renderManager->RenderClear();
 		model.Draw(&shader);
 
@@ -17,8 +33,13 @@ public:
 
 		renderManager->handleEvents();
 	}
-	~ModelImportApp()
-	{
-	}
 
+	void Release()
+	{
+		delete camera;
+	}
+private:
+	Shader shader;
+	Model model;
+	Camera* camera;
 };

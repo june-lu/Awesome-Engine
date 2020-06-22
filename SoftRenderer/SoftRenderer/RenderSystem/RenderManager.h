@@ -20,6 +20,8 @@ public:
 	void DrawTriangleByBarycentricCoordinates(std::vector<Texture> textures, Vertex* vertexs, ShadedMode shadedMode = ShadedMode::Shaded);
 	void DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode = ShadedMode::Shaded);
 
+	void SetCamera(Camera& camera);
+
 	SDLInterface* sdlInterface;
 	RenderContext* renderContext;
 	Rasterizer* rasterizer;

@@ -31,12 +31,12 @@ int main(int argc, char *argv[])
 	//renderManager->DrawTriangleByBarycentricCoordinates(&Color::blue, t3, ShaderMode::ShadedWireframe);
 
 	AppBase* appBase = new ModelImportApp("Model Import", 800, 600);
-
+	appBase->Init();
 	while (true)
 	{
 		appBase->Run();
 	}
-
+	appBase->Release();
 	getchar();
 	return 0;
 
