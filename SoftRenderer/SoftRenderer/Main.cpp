@@ -1,8 +1,9 @@
-#include "RenderSystem/RenderManager.h"
-#include "Base/Model.h"
+#include "Applications/AppBase.hpp"
+#include "Applications/ModelImportApp.hpp"
+
 int main(int argc, char *argv[])
 {
-	RenderManager* renderManager = new RenderManager("SoftRender", 800, 600);
+
 
 	//Vector2f center(400, 300);
 	//int length = 50;
@@ -29,16 +30,11 @@ int main(int argc, char *argv[])
 	//renderManager->DrawTriangleByBarycentricCoordinates(&Color::blue, t2, ShaderMode::ShadedWireframe);
 	//renderManager->DrawTriangleByBarycentricCoordinates(&Color::blue, t3, ShaderMode::ShadedWireframe);
 
-	Shader shader;
-	Model model("ModelData/nanosuit.obj", renderManager);
-	renderManager->RenderClear();
-	model.Draw(&shader);
-
-	renderManager->SwapBuffer();
+	AppBase* appBase = new ModelImportApp("Model Import", 800, 600);
 
 	while (true)
 	{
-		renderManager->handleEvents();
+		appBase->Run();
 	}
 
 	getchar();

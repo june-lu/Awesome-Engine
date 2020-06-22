@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Applications\AppBase.hpp" />
+    <ClCompile Include="Applications\ModelImportApp.hpp" />
     <ClCompile Include="Base\Color.cpp" />
     <ClCompile Include="Math\Mathf.cpp" />
     <ClCompile Include="Base\Mesh.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="RenderSystem\Shader.cpp" />
     <ClCompile Include="Base\stb_image.cpp" />
     <ClCompile Include="Base\Triangle.cpp" />
+    <ClCompile Include="Base\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Color.h" />
@@ -185,6 +188,7 @@
     <ClInclude Include="Base\Vertex.h" />
     <ClInclude Include="RenderSystem\Shader.h" />
     <ClInclude Include="Base\Triangle.h" />
+    <ClInclude Include="Base\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ThirdParty\Assimp-5.0.1\lib\x64\assimp-vc141-mtd.lib" />
