@@ -11,6 +11,7 @@ SDLInterface::SDLInterface(const char* windowName, int width, int height)
 	CreateRenderer();
 	CreateMainTexture();
 	CreateSurface();
+	keyboardEventHandleCB = std::bind(&SDLInterface::handleKeyDownEvents, this, placeholders::_1);
 }
 
 
@@ -65,7 +66,7 @@ void SDLInterface::handleEvents()
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
-			handleKeyDownEvents(&event.key.keysym);
+			keyboardEventHandleCB(&event.key.keysym);
 			break;
 		case SDL_QUIT:
 			// Handle quit requests (like Ctrl-c).  
@@ -84,6 +85,7 @@ void SDLInterface::Render()
 
 void SDLInterface::handleKeyDownEvents(SDL_Keysym* keysym)
 {
+	std::cout << "SDLInterface::handleKeyDownEvents is come" << std::endl;
 	switch (keysym->sym)
 	{
 	case SDLK_ESCAPE:
@@ -91,14 +93,6 @@ void SDLInterface::handleKeyDownEvents(SDL_Keysym* keysym)
 		break;
 	case SDLK_F1:
 		ToggleFullscreen();
-		break;
-	case SDLK_a:
-		modelRptateAngel -= 5;
-		modelRptateAngel %= 360;
-		break;
-	case SDLK_d:
-		modelRptateAngel += 5;
-		modelRptateAngel %= 360;
 		break;
 	default:
 		break;
@@ -123,7 +117,7 @@ void SDLInterface::ToggleFullscreen()
 
 void SDLInterface::CreateRenderer()
 {
-	renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
 void SDLInterface::SetDrawColor(Color* color)

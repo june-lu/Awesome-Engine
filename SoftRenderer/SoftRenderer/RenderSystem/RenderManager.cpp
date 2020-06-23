@@ -22,10 +22,12 @@ Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
 	return model;
 }
 
-Matrix4f GetViewMatrix(Vector3f eyePos, Vector3f lookAt_direction, Vector3f up_direction)
+Matrix4f GetViewMatrix(Camera camera)
 {
 	Matrix4f view(Matrix4f::Identity);
-	view.Transform(-1 * eyePos);
+	view.Transform(-1 * camera.GetCameraPosition());
+	Vector3f up_direction = camera.GetCameraUpDirection();
+	Vector3f lookAt_direction = camera.GetCameraForwardDirection();
 	Vector3f lookAt2Up = Cross(lookAt_direction, up_direction);
 	Matrix4f viewMat(
 		lookAt2Up.x, up_direction.x, lookAt_direction.x, 0,
@@ -88,17 +90,17 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	renderContext->depthBuffer.resize(_width * _height);
 
 	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), std::numeric_limits<unsigned int>::max());
-	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::infinity());
+	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());
 
 	rasterizer = new Rasterizer(renderContext);
 
 	Vector3f angle(0, 30, 0);
 	Vector3f scale(4, 4, 4);
 	Vector3f transform = Vector3f(0, -30, 0);
-	
+
 
 	rasterizer->set_model(GetModelMatrix(angle, scale, transform));
-	
+
 	rasterizer->set_projection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
 	rasterizer->set_viewport(GetViewPortMatrix(_width, _height, 0.1, 50));
 }
@@ -122,8 +124,11 @@ void RenderManager::SwapBuffer()
 
 void RenderManager::RenderClear()
 {
-
-	sdlInterface->RenderClear(&Color::white);
+	Color color = Color::blue;
+	Uint32 col = color.GetUintA() << 24 | color.GetUintB() << 16 | color.GetUintG() << 8 | color.GetUintR() << 0;
+	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), col);
+	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());
+	//sdlInterface->RenderClear(&Color::white);
 }
 
 void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode)
@@ -150,9 +155,5 @@ void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t>
 void RenderManager::SetCamera(Camera& camera)
 {
 	renderContext->camera = camera;
-	Vector3f eye_pos = camera.GetCameraPosition();// { 0, 0, 60 };
-	Vector3f lookAt_direction = camera.GetCameraForwardDirection(); //{ 0, 0, 1 };
-	Vector3f up_direction = camera.GetCameraUpDirection();//{ 0, 1, 0 };
-
-	rasterizer->set_view(GetViewMatrix(eye_pos, lookAt_direction, up_direction));
+	rasterizer->set_view(GetViewMatrix(camera));
 }

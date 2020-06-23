@@ -4,6 +4,7 @@
 #include<SDL.h>
 #include "Color.h"
 #include "RenderSystem/RenderContext.h"
+#include <functional>
 
 class SDLInterface
 {
@@ -47,6 +48,6 @@ public:
 	int screenHeight;
 	int screenWidth;
 	bool windowed = false;
-	int modelRptateAngel = 0;
+	std::function< void(SDL_Keysym*) > keyboardEventHandleCB;
 };
 

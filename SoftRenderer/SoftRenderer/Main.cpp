@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 		appBase->Run();
 	}
 	appBase->Release();
+	delete appBase;
 	getchar();
 	return 0;
 
