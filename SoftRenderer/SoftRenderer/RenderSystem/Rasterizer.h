@@ -27,7 +27,11 @@ public:
 	void set_projection(const Matrix4f& p);
 	void set_viewport(const Matrix4f& vp);
 
-	void set_texture(Texture tex) { renderContext->texture = tex; }
+	int save_texture(std::vector<Texture> textures) {
+		int textureID = renderContext->allTextures.size();
+		renderContext->allTextures.push_back(textures);
+		return textureID;
+	}
 	void set_vertex_shader(std::function<Vector3f(vertex_shader_payload)> vert_shader);
 	void set_fragment_shader(std::function<Vector3f(fragment_shader_payload)> frag_shader);
 

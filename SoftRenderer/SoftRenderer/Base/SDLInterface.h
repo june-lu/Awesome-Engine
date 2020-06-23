@@ -14,6 +14,7 @@ public:
 
 	//*********´°¿Ú*************
 	void CreateWindow(const char* windowName, int width, int height);
+	void ChangeWindowName(const char* windowName);
 	void DestoryWindow(SDL_Window* window);
 	void ToggleFullscreen();
 	//*************************

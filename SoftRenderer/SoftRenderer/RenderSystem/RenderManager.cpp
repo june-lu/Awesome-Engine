@@ -124,7 +124,7 @@ void RenderManager::SwapBuffer()
 
 void RenderManager::RenderClear()
 {
-	Color color = Color::blue;
+	Color color = Color::white;
 	Uint32 col = color.GetUintA() << 24 | color.GetUintB() << 16 | color.GetUintG() << 8 | color.GetUintR() << 0;
 	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), col);
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());
@@ -134,7 +134,8 @@ void RenderManager::RenderClear()
 void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode)
 {
 	renderContext->shadedMode = shadedMode;
-	renderContext->textures = textures;
+	int texturesID = rasterizer->save_texture(textures);
+	//renderContext->textures = textures;
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
 	{
 		Triangle triangle;
@@ -145,6 +146,7 @@ void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t>
 			triangle.SetVertex(j, vertex.position);
 			triangle.SetNormal(j, vertex.normal);
 			triangle.SetTexCoord(j, vertex.texCoords);
+			triangle.texturesID = texturesID;
 		}
 
 		renderContext->triangles.push_back(triangle);

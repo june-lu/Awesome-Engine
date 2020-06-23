@@ -25,13 +25,13 @@ public:
 	int height;
 
 	Camera camera;
-	Texture texture;
+	std::vector < std::vector<Texture>> allTextures;
 	ShadedMode shadedMode;
 	std::vector < uint32_t> frameBuffer;
 	std::vector < float > depthBuffer;
 	std::vector<Vertex> vertices;
 	std::vector<uint32_t> indices;
-	std::vector<Texture> textures;
+	//std::vector<Texture> textures;
 	std::vector<Triangle> triangles;
 
 	Matrix4f model;

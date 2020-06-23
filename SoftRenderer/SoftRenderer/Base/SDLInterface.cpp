@@ -29,9 +29,13 @@ void SDLInterface::CreateWindow(const char* windowName, int width, int height)
 		LogError("Could not create window");
 		Quit(1);
 	}
-
-
 }
+
+void SDLInterface::ChangeWindowName(const char* windowName)
+{
+	SDL_SetWindowTitle(mainWindow, windowName);
+}
+
 void SDLInterface::DestoryWindow(SDL_Window* window)
 {
 	SDL_DestroyWindow(window);

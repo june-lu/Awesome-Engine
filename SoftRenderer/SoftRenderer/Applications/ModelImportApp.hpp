@@ -2,7 +2,7 @@
 #include "AppBase.hpp"
 #include "Base/Model.h"
 #include "Base/Camera.h"
-
+#include "Base/Time.h"
 
 class ModelImportApp : public AppBase
 {
@@ -14,10 +14,12 @@ public:
 
 	void Init()
 	{
-		model = Model("ModelData/nanosuit.obj", renderManager);
+		model = Model("ModelData/Crate/Crate1.obj", renderManager);
 		camera = Camera({ 0, 0, 60 }, { 0, 1, 0 }, { 0, 0, 1 });
 		renderManager->SetCamera(camera);
 		renderManager->sdlInterface->keyboardEventHandleCB = std::bind(&ModelImportApp::handleKeyDownEvents, this, placeholders::_1);
+		time.Start();
+
 	}
 
 	~ModelImportApp()
@@ -27,7 +29,11 @@ public:
 
 	void Run()
 	{
+		time.Update();
+		//std::string fps = "FPS: " + Time::fps;
+		//renderManager->sdlInterface->ChangeWindowName(fps.c_str());
 		renderManager->handleEvents();
+		renderManager->SetCamera(camera);
 		renderManager->RenderClear();
 		model.Draw(&shader);
 		renderManager->SwapBuffer();
@@ -69,4 +75,5 @@ private:
 	Model model;
 	Camera camera;
 	RenderManager* renderManager;
+	Time time;
 };
