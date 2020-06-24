@@ -44,7 +44,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& output, const Color& color)
 	{
-		output << ("color : (%f, %f, %f, %f)", color.r, color.g, color.b, color.a) << std::endl;
+		output << "color : (" << color.r << ", " << color.g << ", " << color.b << ", " << color.a << ")" << std::endl;
 		return output;
 	}
 

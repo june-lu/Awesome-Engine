@@ -68,7 +68,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		{
 			Vector3f normal(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 		}
-		
+
 		Vector2f texCoords;
 
 
@@ -147,6 +147,11 @@ int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 {
 	int textureID;
 	std::string fileName = std::string(path);
+	int isSpec = false;
+	//if (fileName == "arm_showroom_spec.png")
+	//{
+	//	isSpec = true;
+	//}
 
 	fileName = directory + "/" + fileName;
 	std::vector<Color> colors;
@@ -166,6 +171,12 @@ int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 
 			colors[row * width + col] = Color((float)data[dataIndex] / 255.0, (float)data[dataIndex + 1] / 255.0,
 				(float)data[dataIndex + 2] / 255.0, (float)data[dataIndex + 3] / 255.0);
+
+			if (isSpec)
+			{
+				std::cout << colors[row * width + col] << std::endl;
+			}
+
 		}
 	}
 

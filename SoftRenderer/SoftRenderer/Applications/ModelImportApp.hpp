@@ -9,12 +9,13 @@ class ModelImportApp : public AppBase
 public:
 	ModelImportApp(std::string appName, int appWidth, int appHeight)
 	{
+		this->appName = appName;
 		renderManager = new RenderManager(appName.c_str(), appWidth, appHeight);
 	}
 
 	void Init()
 	{
-		model = Model("ModelData/Crate/Crate1.obj", renderManager);
+		model = Model("ModelData/nanosuit.obj", renderManager);
 		camera = Camera({ 0, 0, 60 }, { 0, 1, 0 }, { 0, 0, 1 });
 		renderManager->SetCamera(camera);
 		renderManager->sdlInterface->keyboardEventHandleCB = std::bind(&ModelImportApp::handleKeyDownEvents, this, placeholders::_1);
@@ -25,13 +26,12 @@ public:
 	~ModelImportApp()
 	{
 		Release();
-	}
+	} 
 
 	void Run()
 	{
 		time.Update();
-		//std::string fps = "FPS: " + Time::fps;
-		//renderManager->sdlInterface->ChangeWindowName(fps.c_str());
+		renderManager->sdlInterface->ChangeWindowName((appName + " (FPS: " + to_string(Time::fps) + ")").c_str());
 		renderManager->handleEvents();
 		renderManager->SetCamera(camera);
 		renderManager->RenderClear();
@@ -76,4 +76,5 @@ private:
 	Camera camera;
 	RenderManager* renderManager;
 	Time time;
+	string appName;
 };

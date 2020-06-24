@@ -8,6 +8,13 @@
 - [ ] Renderer
     - [x] SDL窗口工具
     - [x] Assimp模型工具
+    - [x] Bresenham画线算法
+    - [x] 基于扫描线的三角形填充(LineSweeping)
+    - [x] 基于重心坐标的三角形填充(BarycentricCoordinates)
+    - [ ] 灵活的摄像机实现
+    - [ ] 视锥体裁剪
+    - [ ] light 光源（点光源，方向光，区域光，纹理光）
+    - [ ] 物体（平面，三角形，球，四棱柱，圆柱，圆盘）
     - [ ] TBDR/CBDR
     - [ ] Occlusion Culling
     - [ ] CSM/PCSS
@@ -17,12 +24,10 @@
     - [ ] 全局光照
     - [ ] 路径追踪
     - [ ] 蒙特卡洛积分
-    - [ ] Russian Roulette
+    - [ ] 俄罗斯轮盘赌Russian Roulette
     - [ ] 纹理（Solid，Procedural，Cellular）
     - [ ] 反走样(SSAA, MSAA, TAA)
-    - [ ] Depth of field
-    - [ ] light 光源（点光源，方向光，区域光，纹理光）
-    - [ ] 物体（平面，三角形，球，四棱柱，圆柱，圆盘）
+    - [ ] 景深Depth of field
     - [ ] 加速数据结构（BVH）
     - [ ] 切线空间法线贴图（Tangent space normal mapping）
     - [ ] 阴影贴图（Shadow mapping）

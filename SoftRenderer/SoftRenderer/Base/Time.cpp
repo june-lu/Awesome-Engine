@@ -30,7 +30,6 @@ void Time::Update()
 		fps = frameCountInOneSecond;
 		frameCountInOneSecond = 0;
 		lastFpsTime = allTime;
-		std::cout << "fps : " << fps << std::endl;
 	}
 	//std::cout << "allTime : " << allTime << std::endl;
 }

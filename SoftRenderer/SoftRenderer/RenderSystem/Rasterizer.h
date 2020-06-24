@@ -6,7 +6,7 @@
 #include "Base/Vertex.h"
 #include "Math/Matrix.hpp"
 #include "RenderSystem/Shader.h"
-
+#include <omp.h>
 
 class Rasterizer
 {
