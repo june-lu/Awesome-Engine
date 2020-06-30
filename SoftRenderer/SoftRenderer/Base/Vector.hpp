@@ -198,6 +198,19 @@ public:
 		return z;
 	}
 
+	float Magnitude() {
+		return sqrt(x*x + y * y + z * z);;
+	}
+
+	float SqrtMagnitude() {
+		return sqrt(x*x + y * y + z * z);
+	}
+
+	Vector3<T> Normalized() {
+		float tmpLength = this->Magnitude();
+		return Vector3<T>(x / tmpLength, y / tmpLength, z / tmpLength);
+	}
+
 	friend std::ostream& operator<<(std::ostream &os, const Vector3<T> &v) {
 		return os << v.x << " "
 			<< std::setw(8) << v.y << " "
@@ -241,6 +254,12 @@ inline Vector3<T> Cross(Vector3<T> lhs, Vector3<T> rhs)
 	return Vector3<T>(lhs.y * rhs.z - lhs.z * rhs.y,
 		lhs.z * rhs.x - lhs.x * rhs.z,
 		lhs.x * rhs.y - lhs.y * rhs.x);
+}
+
+template <typename T>
+inline T Dot(Vector3<T> lhs, Vector3<T> rhs)
+{
+	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 }
 
 template <typename T>

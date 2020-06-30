@@ -1,10 +1,7 @@
-#include "Applications/AppBase.hpp"
 #include "Applications/ModelImportApp.hpp"
 
 int main(int argc, char *argv[])
 {
-
-
 	//Vector2f center(400, 300);
 	//int length = 50;
 	//float angle = 180;

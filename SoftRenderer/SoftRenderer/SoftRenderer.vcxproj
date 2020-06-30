@@ -157,6 +157,7 @@
     <ClCompile Include="Applications\ModelImportApp.hpp" />
     <ClCompile Include="Base\Color.cpp" />
     <ClCompile Include="Base\Camera.cpp" />
+    <ClCompile Include="Light\Light.cpp" />
     <ClCompile Include="Math\Mathf.cpp" />
     <ClCompile Include="Base\Mesh.cpp" />
     <ClCompile Include="Base\Model.cpp" />
@@ -168,7 +169,6 @@
     <ClCompile Include="RenderSystem\RenderContext.cpp" />
     <ClCompile Include="RenderSystem\Rasterizer.cpp" />
     <ClCompile Include="Base\Vertex.cpp" />
-    <ClCompile Include="RenderSystem\Shader.cpp" />
     <ClCompile Include="Base\stb_image.cpp" />
     <ClCompile Include="Base\Triangle.cpp" />
     <ClCompile Include="Base\Time.cpp" />
@@ -177,6 +177,8 @@
     <ClInclude Include="Base\Color.h" />
     <ClInclude Include="Base\Vector.hpp" />
     <ClInclude Include="Base\Camera.h" />
+    <ClInclude Include="Light\Light.h" />
+    <ClInclude Include="Light\PointLight.hpp" />
     <ClInclude Include="Math\Mathf.h" />
     <ClInclude Include="Base\Mesh.h" />
     <ClInclude Include="Base\Model.h" />
@@ -189,7 +191,7 @@
     <ClInclude Include="RenderSystem\RenderContext.h" />
     <ClInclude Include="RenderSystem\Rasterizer.h" />
     <ClInclude Include="Base\Vertex.h" />
-    <ClInclude Include="RenderSystem\Shader.h" />
+    <ClInclude Include="RenderSystem\Shader.hpp" />
     <ClInclude Include="Base\Triangle.h" />
     <ClInclude Include="Base\Time.h" />
   </ItemGroup>

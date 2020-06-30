@@ -6,10 +6,10 @@ Color Color::blue(0, 0, 1, 1);
 Color Color::black(0, 0, 0, 1);
 Color Color::white(1, 1, 1, 1);
 
-int Color::GetUintR() { return (int)(r * 255); }
-int Color::GetUintG() { return (int)(g * 255); }
-int Color::GetUintB() { return (int)(b * 255); }
-int Color::GetUintA() { return (int)(a * 255); }
+int Color::GetUintR() { return (int)(Mathf::Min(255, r * 255)); }
+int Color::GetUintG() { return (int)(Mathf::Min(255, g * 255)); }
+int Color::GetUintB() { return (int)(Mathf::Min(255, b * 255)); }
+int Color::GetUintA() { return (int)(Mathf::Min(255, a * 255)); }
 
 Color::Color()
 {
@@ -77,4 +77,9 @@ Color& Color::operator *=(const Color &color)
 {
 	r *= color.r; b *= color.b; g *= color.g; a *= color.a;
 	return *this;
+}
+
+Vector3f Color::ToVec3()
+{
+	return Vector3f(r, g, b);
 }

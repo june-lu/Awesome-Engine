@@ -11,22 +11,23 @@ public:
 	{
 		this->appName = appName;
 		renderManager = new RenderManager(appName.c_str(), appWidth, appHeight);
+		shader = new DefaultShader();
 	}
 
 	void Init()
 	{
 		model = Model("ModelData/nanosuit.obj", renderManager);
-		camera = Camera({ 0, 0, 60 }, { 0, 1, 0 }, { 0, 0, 1 });
+		camera = Camera({ 0, 0, 70 }, { 0, 1, 0 }, { 0, 0, 1 });
 		renderManager->SetCamera(camera);
 		renderManager->sdlInterface->keyboardEventHandleCB = std::bind(&ModelImportApp::handleKeyDownEvents, this, placeholders::_1);
 		time.Start();
-
+		model.Draw(shader);
 	}
 
 	~ModelImportApp()
 	{
 		Release();
-	} 
+	}
 
 	void Run()
 	{
@@ -35,12 +36,14 @@ public:
 		renderManager->handleEvents();
 		renderManager->SetCamera(camera);
 		renderManager->RenderClear();
-		model.Draw(&shader);
+		renderManager->rasterizer->DrawTriangleByBarycentricCoordinates();
 		renderManager->SwapBuffer();
 	}
 
 	void Release()
 	{
+		delete renderManager;
+		delete shader;
 	}
 
 	void handleKeyDownEvents(SDL_Keysym* keysym)
@@ -70,11 +73,13 @@ public:
 		}
 	}
 
+
 private:
-	Shader shader;
+	Shader* shader;
 	Model model;
 	Camera camera;
 	RenderManager* renderManager;
 	Time time;
 	string appName;
 };
+

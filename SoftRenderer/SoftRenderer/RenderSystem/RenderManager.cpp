@@ -8,6 +8,8 @@ RenderManager::RenderManager()
 
 RenderManager::~RenderManager()
 {
+	delete sdlInterface;
+	delete	renderContext;
 }
 
 Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
@@ -99,10 +101,10 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	Vector3f transform = Vector3f(0, -30, 0);
 
 
-	rasterizer->set_model(GetModelMatrix(angle, scale, transform));
+	rasterizer->SetModel(GetModelMatrix(angle, scale, transform));
 
-	rasterizer->set_projection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
-	rasterizer->set_viewport(GetViewPortMatrix(_width, _height, 0.1, 50));
+	rasterizer->SetProjection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
+	rasterizer->SetViewport(GetViewPortMatrix(_width, _height, 0.1, 50));
 }
 
 
@@ -131,10 +133,12 @@ void RenderManager::RenderClear()
 	//sdlInterface->RenderClear(&Color::white);
 }
 
-void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode)
+void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode)
 {
 	renderContext->shadedMode = shadedMode;
-	int texturesID = rasterizer->save_texture(textures);
+	renderContext->shader = shader;
+	
+	int texturesID = rasterizer->SaveTexture(textures);
 	//renderContext->textures = textures;
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
 	{
@@ -157,5 +161,5 @@ void RenderManager::DrawMesh(std::vector<Vertex> vertices, std::vector<uint32_t>
 void RenderManager::SetCamera(Camera& camera)
 {
 	renderContext->camera = camera;
-	rasterizer->set_view(GetViewMatrix(camera));
+	rasterizer->SetView(GetViewMatrix(camera));
 }

@@ -1,5 +1,7 @@
 ### 透视效果
 ![image](SoftRenderer/Screenshots/perspectiveResult.png)
+### 光照效果
+![image](SoftRenderer/Screenshots/LightResult.png)
 ### 待实现的功能
 - [ ] Editor
     - [ ] Scene Serialization

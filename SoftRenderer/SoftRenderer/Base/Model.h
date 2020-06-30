@@ -8,7 +8,7 @@
 #include "Mesh.h"
 #include "stb_image.h"
 #include"stb_image_write.h"
-#include "RenderSystem/Shader.h"
+#include "RenderSystem/Shader.hpp"
 #include "RenderSystem/RenderManager.h"
 
 class Model

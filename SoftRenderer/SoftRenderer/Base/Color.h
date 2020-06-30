@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Math/Mathf.h"
+#include "Vector.hpp"
 
 class Color
 {
@@ -40,7 +41,7 @@ public:
 	Color &operator +=(const Color &color);
 	Color &operator -=(const Color &color);
 	Color &operator *=(const Color &color);
-
+	Vector3f ToVec3();
 
 	friend std::ostream& operator<<(std::ostream& output, const Color& color)
 	{
@@ -57,4 +58,5 @@ public:
 
 		return Color(r, g, b, a);
 	};
+
 };

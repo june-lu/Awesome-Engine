@@ -5,7 +5,7 @@
 #include "Base/Texture.h"
 #include "Base/Vertex.h"
 #include "Math/Matrix.hpp"
-#include "RenderSystem/Shader.h"
+#include "RenderSystem/Shader.hpp"
 #include <omp.h>
 
 class Rasterizer
@@ -22,18 +22,16 @@ public:
 	void DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedMode = ShadedMode::Shaded);
 	void DrawTriangleByBarycentricCoordinates();
 
-	void set_model(const Matrix4f& m);
-	void set_view(const Matrix4f& v);
-	void set_projection(const Matrix4f& p);
-	void set_viewport(const Matrix4f& vp);
+	void SetModel(const Matrix4f& m);
+	void SetView(const Matrix4f& v);
+	void SetProjection(const Matrix4f& p);
+	void SetViewport(const Matrix4f& vp);
 
-	int save_texture(std::vector<Texture> textures) {
+	int SaveTexture(std::vector<Texture> textures) {
 		int textureID = renderContext->allTextures.size();
 		renderContext->allTextures.push_back(textures);
 		return textureID;
 	}
-	void set_vertex_shader(std::function<Vector3f(vertex_shader_payload)> vert_shader);
-	void set_fragment_shader(std::function<Vector3f(fragment_shader_payload)> frag_shader);
 
 	void SetPixel(Color &color, const int posX, const int posY);
 

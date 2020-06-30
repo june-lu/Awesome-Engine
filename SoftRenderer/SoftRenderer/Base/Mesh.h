@@ -2,7 +2,7 @@
 #include <vector>
 #include "Vertex.h"
 #include "Texture.h"
-#include "RenderSystem/Shader.h"
+#include "RenderSystem/Shader.hpp"
 #include "RenderSystem/RenderManager.h"
 
 class Mesh
