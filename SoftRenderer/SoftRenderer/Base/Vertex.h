@@ -14,7 +14,7 @@ public:
 
 	Vertex(Vector2f _position, Color _color) :position(_position), color(_color) {}
 	Vertex(Vector3f _position, Vector3f _normal, Vector2f _texCoords)
-		:position(_position), normal(_normal), texCoords(_texCoords){}
+		:position(_position), normal(_normal), texCoords(_texCoords),color(Color::white){}
 	Vertex();
 	~Vertex();
 	Vertex interpolate(const Vertex &vertex, float t) const

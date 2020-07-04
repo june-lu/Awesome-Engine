@@ -57,10 +57,10 @@ void Camera::LookAt(Vector3f position, Vector3f upDirection, Vector3f forwardDir
 
 void Camera::MoveFront(int dir)
 {
-	position += dir * moveSpeed * Vector3f::front;
+	position += dir * moveSpeed * upDirection;
 }
 
 void Camera::MoveLeft(int dir)
 {
-	position -= dir * moveSpeed * Cross(upDirection, forwardDirection);
+	position -= dir * moveSpeed * Cross(upDirection, forwardDirection).Normalized();
 }

@@ -16,11 +16,11 @@ Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
 {
 	Matrix4f model(Matrix4f::Identity);
 
-	model.Transform(transform);
 	model.scale(scale);
 	model.RotateX(angle.x);
 	model.RotateY(angle.y);
 	model.RotateZ(angle.z);
+	model.Transform(transform);
 	return model;
 }
 
@@ -31,10 +31,16 @@ Matrix4f GetViewMatrix(Camera camera)
 	Vector3f up_direction = camera.GetCameraUpDirection();
 	Vector3f lookAt_direction = camera.GetCameraForwardDirection();
 	Vector3f lookAt2Up = Cross(lookAt_direction, up_direction);
-	Matrix4f viewMat(
+	/*Matrix4f viewMat(
 		lookAt2Up.x, up_direction.x, lookAt_direction.x, 0,
 		lookAt2Up.y, up_direction.y, lookAt_direction.y, 0,
 		lookAt2Up.z, up_direction.z, lookAt_direction.z, 0,
+		0, 0, 0, 1);*/
+
+	Matrix4f viewMat(
+		lookAt2Up.x, lookAt2Up.y, lookAt2Up.z, 0,
+		up_direction.x, up_direction.y, up_direction.z, 0,
+		lookAt_direction.x, lookAt_direction.y, lookAt_direction.z, 0,
 		0, 0, 0, 1);
 
 	view = viewMat * view;
@@ -51,19 +57,27 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f
 	float r = t * aspect_ratio;
 	float l = -r;
 
-	//Matrix4f persp2orthoMat(
-	//	zNear, 0, 0, 0,
-	//	0, zNear, 0, 0,
-	//	0, 0, zNear + zFar, -zNear * zFar,
-	//	0, 0, 1, 0);
-
 	projection = Matrix4f(
+		2 / (r - l), 0, 0, -(r + l) *0.5,
+		0, 2 / (t - b), 0, -(t + b) *0.5,
+		0, 0, 2 / (n - f), -(n + f) *0.5,
+		0, 0, 0, 1);
+
+	/*projection = Matrix4f(
 		2 * n / (r - l), 0, -(r + l) / (r - l), 0,
 		0, 2 * n / (t - b), -(t + b) / (t - b), 0,
 		0, 0, (n + f) / (n - f), (-2 * n * f) / (n - f),
+		0, 0, 1, 0);*/
+
+	Matrix4f persp2orthoMat(
+		n, 0, 0, 0,
+		0, n, 0, 0,
+		0, 0, n + f, -n * f,
 		0, 0, 1, 0);
 
-	//projection *= persp2orthoMat;
+
+
+	projection *= persp2orthoMat;
 	//std::cout << projection << std::endl;
 	//projection.scale(Vector3f(1.0 / left, 1.0 / bottom, 2.0 / (zFar - zNear)));
 	//std::cout << projection << std::endl;
@@ -96,9 +110,9 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	rasterizer = new Rasterizer(renderContext);
 
-	Vector3f angle(0, 30, 0);
-	Vector3f scale(4, 4, 4);
-	Vector3f transform = Vector3f(0, -30, 0);
+	Vector3f angle(0, 0, 0);
+	Vector3f scale(1, 1, 1);
+	Vector3f transform = Vector3f(0, -8, 0);
 
 
 	rasterizer->SetModel(GetModelMatrix(angle, scale, transform));
@@ -106,8 +120,6 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	rasterizer->SetProjection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
 	rasterizer->SetViewport(GetViewPortMatrix(_width, _height, 0.1, 50));
 }
-
-
 
 void RenderManager::DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedmodel)
 {
@@ -130,16 +142,12 @@ void RenderManager::RenderClear()
 	Uint32 col = color.GetUintA() << 24 | color.GetUintB() << 16 | color.GetUintG() << 8 | color.GetUintR() << 0;
 	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), col);
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());
-	//sdlInterface->RenderClear(&Color::white);
 }
-
-void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode)
+void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::vector<uint32_t> indices, int texturesID, ShadedMode shadedMode)
 {
 	renderContext->shadedMode = shadedMode;
 	renderContext->shader = shader;
-	
-	int texturesID = rasterizer->SaveTexture(textures);
-	//renderContext->textures = textures;
+
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
 	{
 		Triangle triangle;
@@ -149,6 +157,7 @@ void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::
 
 			triangle.SetVertex(j, vertex.position);
 			triangle.SetNormal(j, vertex.normal);
+			triangle.SetColor(j, vertex.color);
 			triangle.SetTexCoord(j, vertex.texCoords);
 			triangle.texturesID = texturesID;
 		}
@@ -158,8 +167,19 @@ void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::
 	rasterizer->DrawTriangleByBarycentricCoordinates();
 }
 
+void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<Texture> textures, ShadedMode shadedMode)
+{
+	int texturesID = rasterizer->SaveTexture(textures);
+	DrawMesh(shader, vertices, indices, texturesID, shadedMode);
+}
+
 void RenderManager::SetCamera(Camera& camera)
 {
 	renderContext->camera = camera;
 	rasterizer->SetView(GetViewMatrix(camera));
+}
+
+void RenderManager::Draw()
+{
+	rasterizer->DrawTriangleByBarycentricCoordinates();
 }

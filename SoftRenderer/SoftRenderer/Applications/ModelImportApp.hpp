@@ -16,12 +16,19 @@ public:
 
 	void Init()
 	{
-		model = Model("ModelData/nanosuit.obj", renderManager);
-		camera = Camera({ 0, 0, 70 }, { 0, 1, 0 }, { 0, 0, 1 });
+		//model = Model("ModelData/nanosuit.obj", renderManager);
+		camera = Camera({ 0, 0, 20 }, { 0, 1, 0 }, { 0, 0, 1 });
 		renderManager->SetCamera(camera);
 		renderManager->sdlInterface->keyboardEventHandleCB = std::bind(&ModelImportApp::handleKeyDownEvents, this, placeholders::_1);
 		time.Start();
-		model.Draw(shader);
+		//model.Draw(shader);
+		std::vector<Vertex> vertices = {
+		Vertex(Vector3f(0,10,0),Color::red),
+		Vertex(Vector3f(-5,5,0),Color::green),
+		Vertex(Vector3f(5,5,0),Color::blue)
+		};
+		std::vector<uint32_t> indices = { 0,1,2 };
+		renderManager->DrawMesh(shader, vertices, indices, -1, ShadedMode::Shaded);
 	}
 
 	~ModelImportApp()
@@ -36,7 +43,7 @@ public:
 		renderManager->handleEvents();
 		renderManager->SetCamera(camera);
 		renderManager->RenderClear();
-		renderManager->rasterizer->DrawTriangleByBarycentricCoordinates();
+		renderManager->Draw();
 		renderManager->SwapBuffer();
 	}
 
