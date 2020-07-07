@@ -34,7 +34,9 @@ public:
 	}
 
 	void SetPixel(Color &color, const int posX, const int posY);
-
+	std::vector<Vertex> ClippingByPlane(std::vector<Vertex> projectionCoords, Vector3f planePos, Vector3f planeNormal);
+	std::vector<Vertex> ClippingBySixPlane(std::vector<Vertex> projectionCoords);
+	Vertex InterpolateVertex(Vertex startVertex, Vertex endVertex, float t);
 	RenderContext* renderContext;
 
 };

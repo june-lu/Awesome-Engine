@@ -57,24 +57,31 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f
 	float r = t * aspect_ratio;
 	float l = -r;
 
-	projection = Matrix4f(
-		2 / (r - l), 0, 0, -(r + l) *0.5,
-		0, 2 / (t - b), 0, -(t + b) *0.5,
-		0, 0, 2 / (n - f), -(n + f) *0.5,
+	Matrix4f matTran = Matrix4f(
+		1, 0, 0, -(r + l) *0.5,
+		0, 1, 0, -(t + b) *0.5,
+		0, 0, 1, -(n + f) *0.5,
 		0, 0, 0, 1);
 
+	Matrix4f matScale = Matrix4f(
+		2 / (r - l), 0, 0, 0,
+		0, 2 / (t - b), 0, 0,
+		0, 0, 2 / (n - f), 0,
+		0, 0, 0, 1);
+
+	projection = matScale * matTran;
+
 	/*projection = Matrix4f(
-		2 * n / (r - l), 0, -(r + l) / (r - l), 0,
-		0, 2 * n / (t - b), -(t + b) / (t - b), 0,
-		0, 0, (n + f) / (n - f), (-2 * n * f) / (n - f),
+		2 * n / (r - l), 0, (r + l) / (r - l), 0,
+		0, 2 * n / (t - b), (t + b) / (t - b), 0,
+		0, 0, (n + f) / (n - f), (2 * n * f) / (n - f),
 		0, 0, 1, 0);*/
 
 	Matrix4f persp2orthoMat(
 		n, 0, 0, 0,
 		0, n, 0, 0,
-		0, 0, n + f, -n * f,
+		0, 0, n + f, n * f,
 		0, 0, 1, 0);
-
 
 
 	projection *= persp2orthoMat;
@@ -88,6 +95,8 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f
 
 Matrix4f GetViewPortMatrix(int width, int height, float zNear, float zFar)
 {
+	width--;
+	height--;
 	Matrix4f viewport(
 		width * 0.5, 0, 0, width * 0.5,
 		0, height * 0.5, 0, height * 0.5,
@@ -112,13 +121,14 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	Vector3f angle(0, 0, 0);
 	Vector3f scale(1, 1, 1);
-	Vector3f transform = Vector3f(0, -8, 0);
-
+	Vector3f transform = Vector3f(0, -10, 0);
+	float zNear = 5;
+	float zFar = 50;
 
 	rasterizer->SetModel(GetModelMatrix(angle, scale, transform));
 
-	rasterizer->SetProjection(GetProjectionMatrix(60, _width / _height, 0.1, 100));
-	rasterizer->SetViewport(GetViewPortMatrix(_width, _height, 0.1, 50));
+	rasterizer->SetProjection(GetProjectionMatrix(60, _width / _height, zNear, zFar));
+	rasterizer->SetViewport(GetViewPortMatrix(_width, _height, zNear, zFar));
 }
 
 void RenderManager::DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedmodel)
