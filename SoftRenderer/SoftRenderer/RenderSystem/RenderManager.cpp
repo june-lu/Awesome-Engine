@@ -15,19 +15,20 @@ RenderManager::~RenderManager()
 Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
 {
 	Matrix4f model(Matrix4f::Identity);
-
 	model.scale(scale);
+	model.Transform(transform);
+	
 	model.RotateX(angle.x);
 	model.RotateY(angle.y);
 	model.RotateZ(angle.z);
-	model.Transform(transform);
+
 	return model;
 }
 
 Matrix4f GetViewMatrix(Camera camera)
 {
 	Matrix4f view(Matrix4f::Identity);
-	view.Transform(-1 * camera.GetCameraPosition());
+	
 	Vector3f up_direction = camera.GetCameraUpDirection();
 	Vector3f lookAt_direction = camera.GetCameraForwardDirection();
 	Vector3f lookAt2Up = Cross(lookAt_direction, up_direction);
@@ -44,6 +45,7 @@ Matrix4f GetViewMatrix(Camera camera)
 		0, 0, 0, 1);
 
 	view = viewMat * view;
+	view.Transform(-1 * camera.GetCameraPosition());
 	return view;
 }
 
@@ -119,7 +121,7 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	rasterizer = new Rasterizer(renderContext);
 
-	Vector3f angle(0, 30, 0);
+	Vector3f angle(0, 0, 0);
 	Vector3f scale(4, 4, 4);
 	Vector3f transform = Vector3f(0, -8, 0);
 	float zNear = 0.1;

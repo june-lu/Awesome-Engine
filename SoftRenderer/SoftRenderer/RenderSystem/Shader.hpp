@@ -90,11 +90,11 @@ public:
 		}
 
 		Vector3f ambientLightIntensity(10, 10, 10);
-		PointLight pointLight(Color::red, Vector3f(0, 0, -50));
+		PointLight pointLight(Color::red, Vector3f(0, 0, -20));
 		pointLight.SetAttenuationPara(1.0f, 0.09f, 0.032f);
 
 		//float attenuation = pointLight.GetAttenuation(viewPos);
-		Vector3f attenuation(2000, 2000, 2000);
+		Vector3f attenuation(800, 800, 800);
 		float p = 150;
 		Vector3f lightDir = pointLight.position - viewPos;
 		Vector3f eyeDir = eyePos - pointLight.position;

@@ -14,11 +14,9 @@ Camera::Camera(Vector3f position, Vector3f upDirection, Vector3f forwardDirectio
 	this->position = position;
 }
 
-
 Camera::~Camera()
 {
 }
-
 
 void Camera::SetCameraUpDirection(Vector3f upDirection)
 {
@@ -57,7 +55,7 @@ void Camera::LookAt(Vector3f position, Vector3f upDirection, Vector3f forwardDir
 
 void Camera::MoveFront(int dir)
 {
-	position += dir * moveSpeed * upDirection;
+	position += dir * moveSpeed * forwardDirection;
 }
 
 void Camera::MoveLeft(int dir)
