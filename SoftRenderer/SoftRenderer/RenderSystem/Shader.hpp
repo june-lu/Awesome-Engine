@@ -50,7 +50,7 @@ class DefaultShader : public Shader
 public:
 	DefaultShader()
 	{
-		fragmentShader = FragShader;
+		fragmentShader = TextureFragShader;
 		vertexShader = VertShader;
 	}
 
@@ -66,7 +66,7 @@ public:
 
 	static Vector3f TextureFragShader(FragmentShader inputData)
 	{
-
+		//std::cout << "is come" << std::endl;
 		Color textureColor = inputData.textures[0].Sample(inputData.texCoords.x, inputData.texCoords.y);
 
 		//Color textureColor = Color::black;
@@ -82,7 +82,7 @@ public:
 
 		Vector3f ka(0.005, 0.005, 0.005);
 		Vector3f kd = textureColor.ToVec3();
-		Vector3f ks(0.0, 0.0, 0.0);
+		Vector3f ks(0.005, 0.005, 0.005);
 
 		if (inputData.textures.size() > 1)
 		{
@@ -90,16 +90,16 @@ public:
 		}
 
 		Vector3f ambientLightIntensity(10, 10, 10);
-		PointLight pointLight(Color::red, Vector3f(0, 0, -40));
+		PointLight pointLight(Color::red, Vector3f(0, 0, -50));
 		pointLight.SetAttenuationPara(1.0f, 0.09f, 0.032f);
 
 		//float attenuation = pointLight.GetAttenuation(viewPos);
-		Vector3f attenuation(1200, 1200, 1200);
+		Vector3f attenuation(2000, 2000, 2000);
 		float p = 150;
 		Vector3f lightDir = pointLight.position - viewPos;
 		Vector3f eyeDir = eyePos - pointLight.position;
 		Vector3f halfL2E = (eyeDir + lightDir).Normalized();
-		//std::cout << "viewPos : " << viewPos << std::endl;
+
 		Vector3f lightDirNormal = (pointLight.position - viewPos).Normalized();
 		float r2 = pow(lightDir.x, 2.0) + pow(lightDir.y, 2.0) + pow(lightDir.z, 2.0);
 		attenuation /= r2;

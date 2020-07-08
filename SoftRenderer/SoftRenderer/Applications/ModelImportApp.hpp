@@ -16,19 +16,19 @@ public:
 
 	void Init()
 	{
-		//model = Model("ModelData/nanosuit.obj", renderManager);
-		camera = Camera({ 0, 0, 20 }, { 0, 1, 0 }, { 0, 0, 1 });
+		model = Model("ModelData/nanosuit.obj", renderManager);
+		camera = Camera({ 0, 0, 60 }, { 0, 1, 0 }, { 0, 0, 1 });
 		renderManager->SetCamera(camera);
 		renderManager->sdlInterface->keyboardEventHandleCB = std::bind(&ModelImportApp::handleKeyDownEvents, this, placeholders::_1);
 		time.Start();
-		//model.Draw(shader);
-		std::vector<Vertex> vertices = {
+		model.Draw(shader);
+		/*std::vector<Vertex> vertices = {
 		Vertex(Vector3f(0,10,10),Color::red),
 		Vertex(Vector3f(-5,5,10),Color::green),
 		Vertex(Vector3f(5,5, 10),Color::blue)
 		};
 		std::vector<uint32_t> indices = { 0,1,2 };
-		renderManager->DrawMesh(shader, vertices, indices, -1, ShadedMode::Shaded);
+		renderManager->DrawMesh(shader, vertices, indices, -1, ShadedMode::ShadedWireframe);*/
 	}
 
 	~ModelImportApp()

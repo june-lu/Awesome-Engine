@@ -80,7 +80,7 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f
 	Matrix4f persp2orthoMat(
 		n, 0, 0, 0,
 		0, n, 0, 0,
-		0, 0, n + f, n * f,
+		0, 0, n + f, -n * f,
 		0, 0, 1, 0);
 
 
@@ -119,11 +119,11 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	rasterizer = new Rasterizer(renderContext);
 
-	Vector3f angle(0, 0, 0);
-	Vector3f scale(1, 1, 1);
-	Vector3f transform = Vector3f(0, -10, 0);
-	float zNear = 5;
-	float zFar = 50;
+	Vector3f angle(0, 30, 0);
+	Vector3f scale(4, 4, 4);
+	Vector3f transform = Vector3f(0, -8, 0);
+	float zNear = 0.1;
+	float zFar = 100;
 
 	rasterizer->SetModel(GetModelMatrix(angle, scale, transform));
 

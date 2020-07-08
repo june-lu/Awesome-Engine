@@ -149,7 +149,6 @@ int Model::TextureFromFile(const char *path, Texture& texture, bool gamma)
 {
 	int textureID;
 	std::string fileName = std::string(path);
-
 	fileName = directory + "/" + fileName;
 	std::vector<Color> colors;
 	int width, height, nrComponents;
