@@ -94,7 +94,7 @@ public:
 		pointLight.SetAttenuationPara(1.0f, 0.09f, 0.032f);
 
 		//float attenuation = pointLight.GetAttenuation(viewPos);
-		Vector3f attenuation(800, 800, 800);
+		Vector3f attenuation(2000, 2000, 2000);
 		float p = 150;
 		Vector3f lightDir = pointLight.position - viewPos;
 		Vector3f eyeDir = eyePos - pointLight.position;

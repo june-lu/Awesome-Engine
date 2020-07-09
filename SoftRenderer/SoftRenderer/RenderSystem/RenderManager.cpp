@@ -17,7 +17,6 @@ Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
 	Matrix4f model(Matrix4f::Identity);
 	model.scale(scale);
 	model.Transform(transform);
-	
 	model.RotateX(angle.x);
 	model.RotateY(angle.y);
 	model.RotateZ(angle.z);
@@ -28,25 +27,27 @@ Matrix4f GetModelMatrix(Vector3f angle, Vector3f scale, Vector3f transform)
 Matrix4f GetViewMatrix(Camera camera)
 {
 	Matrix4f view(Matrix4f::Identity);
+	Vector3f up = camera.GetCameraUpDirection();
+	Vector3f forward = camera.GetCameraForwardDirection();
+	Vector3f right = camera.GetCameraRightDirection();
+	Vector3f cameraPos = camera.GetCameraPosition();
 	
-	Vector3f up_direction = camera.GetCameraUpDirection();
-	Vector3f lookAt_direction = camera.GetCameraForwardDirection();
-	Vector3f lookAt2Up = Cross(lookAt_direction, up_direction);
-	/*Matrix4f viewMat(
-		lookAt2Up.x, up_direction.x, lookAt_direction.x, 0,
-		lookAt2Up.y, up_direction.y, lookAt_direction.y, 0,
-		lookAt2Up.z, up_direction.z, lookAt_direction.z, 0,
-		0, 0, 0, 1);*/
-
 	Matrix4f viewMat(
-		lookAt2Up.x, lookAt2Up.y, lookAt2Up.z, 0,
-		up_direction.x, up_direction.y, up_direction.z, 0,
-		lookAt_direction.x, lookAt_direction.y, lookAt_direction.z, 0,
+		right.x, up.x, -forward.x, -cameraPos.x,
+		right.y, up.y, -forward.y, -cameraPos.y,
+		right.z, up.z, -forward.z, -cameraPos.z,
 		0, 0, 0, 1);
 
+	//Matrix4f viewMat(
+	//	right.x, right.y, right.z, 0,
+	//	up.x, up.y, up.z, 0,
+	//	-forward.x, -forward.y, -forward.z, 0,
+	//	0, 0, 0, 1);
+
+	//view.Transform(-1 * cameraPos);
 	view = viewMat * view;
-	view.Transform(-1 * camera.GetCameraPosition());
-	return view;
+	
+	return viewMat;
 }
 
 Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f)
@@ -68,7 +69,7 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f
 	Matrix4f matScale = Matrix4f(
 		2 / (r - l), 0, 0, 0,
 		0, 2 / (t - b), 0, 0,
-		0, 0, 2 / (n - f), 0,
+		0, 0, 2 / (f - n), 0,
 		0, 0, 0, 1);
 
 	projection = matScale * matTran;
@@ -82,7 +83,7 @@ Matrix4f GetProjectionMatrix(float eye_fov, float aspect_ratio, float n, float f
 	Matrix4f persp2orthoMat(
 		n, 0, 0, 0,
 		0, n, 0, 0,
-		0, 0, n + f, -n * f,
+		0, 0, n + f, n * f,
 		0, 0, 1, 0);
 
 
@@ -121,7 +122,7 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	rasterizer = new Rasterizer(renderContext);
 
-	Vector3f angle(0, 0, 0);
+	Vector3f angle(0, 30, 0);
 	Vector3f scale(4, 4, 4);
 	Vector3f transform = Vector3f(0, -8, 0);
 	float zNear = 0.1;

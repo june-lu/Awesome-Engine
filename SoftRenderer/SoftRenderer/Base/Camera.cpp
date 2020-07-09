@@ -9,8 +9,9 @@ Camera::Camera()
 
 Camera::Camera(Vector3f position, Vector3f upDirection, Vector3f forwardDirection)
 {
-	this->upDirection = upDirection;
-	this->forwardDirection = forwardDirection;
+	this->upDirection = upDirection.Normalized();
+	this->forwardDirection = (forwardDirection - position).Normalized();
+	this->right = Cross(this->upDirection, this->forwardDirection);
 	this->position = position;
 }
 
@@ -39,17 +40,23 @@ Vector3f Camera::GetCameraUpDirection()
 }
 Vector3f Camera::GetCameraForwardDirection()
 {
-	return forwardDirection;
+	return forwardDirection ;
 }
 Vector3f Camera::GetCameraPosition()
 {
 	return position;
 }
 
+Vector3f Camera::GetCameraRightDirection()
+{
+	return right;
+}
+
 void Camera::LookAt(Vector3f position, Vector3f upDirection, Vector3f forwardDirection)
 {
-	this->upDirection = upDirection;
-	this->forwardDirection = forwardDirection;
+	this->upDirection = upDirection.Normalized();
+	this->forwardDirection = (forwardDirection - position).Normalized();
+	this->right = Cross(this->upDirection, this->forwardDirection);
 	this->position = position;
 }
 
@@ -60,5 +67,5 @@ void Camera::MoveFront(int dir)
 
 void Camera::MoveLeft(int dir)
 {
-	position -= dir * moveSpeed * Cross(upDirection, forwardDirection).Normalized();
+	position -= dir * moveSpeed * right;
 }

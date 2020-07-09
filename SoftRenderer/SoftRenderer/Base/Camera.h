@@ -15,6 +15,7 @@ public:
 	void MoveLeft(int dir);
 
 	Vector3f GetCameraUpDirection();
+	Vector3f GetCameraRightDirection();
 	Vector3f GetCameraForwardDirection();
 	Vector3f GetCameraPosition();
 
@@ -23,6 +24,7 @@ private:
 	Vector3f position;
 	Vector3f upDirection;
 	Vector3f forwardDirection;
+	Vector3f right;
 	float moveSpeed = 1.f;
 };
 
