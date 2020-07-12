@@ -140,14 +140,16 @@ void SDLInterface::SwapBuffer(RenderContext* renderContext)
 	void* mPixels;
 	int mPitch;
 
+	
+
 	SDL_LockTexture(mainRt, NULL, &mPixels, &mPitch);
 
 	memcpy(mPixels, &(renderContext->frameBuffer[0]), surface->pitch * surface->h);
-
-	SDL_UnlockTexture(mainRt);
+	stbi_write_png("stbpng1.png", surface->w, surface->h, 4, &(renderContext->frameBuffer[0]), 4 * surface->w);
+	SDL_UnlockTexture(mainRt);	
 
 	SDL_RenderCopy(renderer, mainRt, NULL, NULL);
-
+	
 	SDL_RenderPresent(renderer);
 
 }

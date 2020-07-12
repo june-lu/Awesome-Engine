@@ -5,6 +5,7 @@
 #include "Color.h"
 #include "RenderSystem/RenderContext.h"
 #include <functional>
+#include "Base/stb_image_write.h"
 
 class SDLInterface
 {

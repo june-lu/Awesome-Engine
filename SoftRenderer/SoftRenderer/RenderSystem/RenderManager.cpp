@@ -122,8 +122,8 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 
 	rasterizer = new Rasterizer(renderContext);
 
-	Vector3f angle(0, 30, 0);
-	Vector3f scale(4, 4, 4);
+	Vector3f angle(0, 0, 0);
+	Vector3f scale(1, 1, 1);
 	Vector3f transform = Vector3f(0, -8, 0);
 	float zNear = 0.1;
 	float zFar = 100;
@@ -134,10 +134,6 @@ RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 	rasterizer->SetViewport(GetViewPortMatrix(_width, _height, zNear, zFar));
 }
 
-void RenderManager::DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedmodel)
-{
-	rasterizer->DrawTriangleByBarycentricCoordinates(color, pts, shadedmodel);
-}
 
 void RenderManager::handleEvents()
 {
@@ -151,7 +147,7 @@ void RenderManager::SwapBuffer()
 
 void RenderManager::RenderClear()
 {
-	Color color = Color::white;
+	Color color = Color::black;
 	Uint32 col = color.GetUintA() << 24 | color.GetUintB() << 16 | color.GetUintG() << 8 | color.GetUintR() << 0;
 	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), col);
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());

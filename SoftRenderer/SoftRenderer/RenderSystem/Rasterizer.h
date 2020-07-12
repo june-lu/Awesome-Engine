@@ -19,7 +19,6 @@ public:
 	void DrawLine(Color color, Vector2f start, Vector2f end);
 	void DrawTriangleByLineSweeping(Color color, Vector3f* pts, ShadedMode shadedMode = ShadedMode::Shaded);
 	void DrawTriangleByWireframe(Color color, Vector3f* pts);
-	void DrawTriangleByBarycentricCoordinates(Color color, Vector3f* pts, ShadedMode shadedMode = ShadedMode::Shaded);
 	void DrawTriangleByBarycentricCoordinates();
 
 	void SetModel(const Matrix4f& m);
@@ -38,6 +37,9 @@ public:
 	std::vector<Vertex> ClippingByPlane(std::vector<Vertex> projectionCoords, Vector3f planePos, Vector3f planeNormal);
 	std::vector<Vertex> ClippingBySixPlane(std::vector<Vertex> projectionCoords);
 	Vertex InterpolateVertex(Vertex startVertex, Vertex endVertex, float t);
+	void MSAA(Triangle &triangle, const int posX, const int posY);
+	bool insideTriangle(float x, float y, Vector3f* _v);
+	Color GetColorByFragment(Triangle &triangle, const Vector3f bcCoord);
 	RenderContext* renderContext;
 
 };

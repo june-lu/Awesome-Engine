@@ -50,7 +50,7 @@ class DefaultShader : public Shader
 public:
 	DefaultShader()
 	{
-		fragmentShader = TextureFragShader;
+		fragmentShader = FragShader;
 		vertexShader = VertShader;
 	}
 

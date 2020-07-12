@@ -17,11 +17,10 @@
     - [X] 视锥体裁剪
     - [ ] light 光源（点光源，方向光，区域光，纹理光）
     - [ ] 物体（平面，三角形，球，四棱柱，圆柱，圆盘）
-    - [ ] TBDR/CBDR
+    - [ ] GPU架构(TBDR(分块延迟渲染)/CBDR)
     - [ ] Occlusion Culling
     - [ ] CSM/PCSS
     - [ ] Stochastic SSR
-    - [ ] TBDR/CBDR
     - [ ] 多种表面的BSDF
     - [ ] 全局光照
     - [ ] 路径追踪

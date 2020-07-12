@@ -11,10 +11,12 @@ public:
 	Triangle() {};
 	~Triangle() {};
 
-	Vector4f pos[3];//color at each vertex
-	Color color[3];//texture u,v
+	Vector4f pos[3];
+	Vector3f screenCoords[3];
+	Vector3f viewCoords[3];
+	Color color[3];//color at each vertex
 	Vector3f normal[3];
-	Vector2f texCoords[3];
+	Vector2f texCoords[3];//texture u,v
 
 	int texturesID;
 
