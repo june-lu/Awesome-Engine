@@ -1,6 +1,6 @@
 ### 透视效果
 ![image](SoftRenderer/Screenshots/perspectiveResult.png)
-### 光照效果
+### Blinn-Phong光照效果
 ![image](SoftRenderer/Screenshots/LightResult.png)
 ### 待实现的功能
 - [ ] Editor
@@ -14,8 +14,8 @@
     - [x] 基于扫描线的三角形填充(LineSweeping)
     - [x] 基于重心坐标的三角形填充(BarycentricCoordinates)
     - [ ] 灵活的摄像机实现
-    - [X] 视锥体裁剪
-    - [ ] light 光源（点光源，方向光，区域光，纹理光）
+    - [X] 视锥体裁剪、背面剔除
+    - [X] light 光源（~~点光源~~，方向光，区域光，纹理光）
     - [ ] 物体（平面，三角形，球，四棱柱，圆柱，圆盘）
     - [ ] GPU架构(TBDR(分块延迟渲染)/CBDR)
     - [ ] Occlusion Culling
@@ -27,7 +27,7 @@
     - [ ] 蒙特卡洛积分
     - [ ] 俄罗斯轮盘赌Russian Roulette
     - [ ] 纹理（Solid，Procedural，Cellular）
-    - [ ] 反走样(SSAA, MSAA, TAA)
+    - [X] 反走样(SSAA, ~~MSAA~~, TAA)
     - [ ] 景深Depth of field
     - [ ] 加速数据结构（BVH）
     - [ ] 切线空间法线贴图（Tangent space normal mapping）
