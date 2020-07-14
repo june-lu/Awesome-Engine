@@ -23,17 +23,18 @@ Color::~Color()
 
 Color::Color(uint32_t c)
 {
-	uintR = c >> 16 & 0xFF;
+	uintA = c >> 24 & 0xFF;
+	uintB = c >> 16 & 0xFF;
 	uintG = c >> 8 & 0xFF;
-	uintB = c & 0xFF;
-	uintA = 255;
+	uintR = c & 0xFF;
+
 
 	float inv255 = 1.0 / 255;
 
 	r = uintR * inv255;
 	g = uintG * inv255;
 	b = uintB * inv255;
-	a = 1;
+	a = uintA * inv255;
 }
 
 Color::Color(float r, float g, float b, float a = 1)
@@ -68,6 +69,12 @@ Color& Color::operator +=(const Color &color)
 	r += color.r; b += color.b; g += color.g; a += color.a;
 	return *this;
 }
+
+Color Color::operator +(Color &color)
+{
+	return Color(r + color.r, b + color.b, g + color.g, a + color.a);
+}
+
 Color& Color::operator -=(const Color &color)
 {
 	r -= color.r; b -= color.b; g -= color.g; a -= color.a;

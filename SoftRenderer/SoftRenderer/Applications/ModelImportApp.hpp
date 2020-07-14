@@ -23,11 +23,14 @@ public:
 		time.Start();
 		//model.Draw(shader);
 		std::vector<Vertex> vertices = {
-		Vertex(Vector3f(0,10,10),Color::green),
-		Vertex(Vector3f(-5,5,10),Color::green),
-		Vertex(Vector3f(5,5, 10),Color::green)
+		Vertex(Vector3f(0,10,10),Color::red),
+		Vertex(Vector3f(-5,5,10),Color::red),
+		Vertex(Vector3f(5,5, 10),Color::red),
+		Vertex(Vector3f(3,10,12),Color::blue),
+		Vertex(Vector3f(-2,5,12),Color::blue),
+		Vertex(Vector3f(8,5, 12),Color::blue),
 		};
-		std::vector<uint32_t> indices = { 0,1,2 };
+		std::vector<uint32_t> indices = { 0,1,2,3,4,5 };
 		renderManager->DrawMesh(shader, vertices, indices, -1, ShadedMode::Shaded);
 	}
 

@@ -39,6 +39,7 @@ public:
 	Color &operator *=(float num);
 	Color operator *(float num);
 	Color &operator +=(const Color &color);
+	Color operator +(Color &color);
 	Color &operator -=(const Color &color);
 	Color &operator *=(const Color &color);
 	Vector3f ToVec3();
