@@ -42,6 +42,7 @@ public:
 	Color &operator -=(const Color &color);
 	Color &operator *=(const Color &color);
 	Vector3f ToVec3();
+	uint32_t ToUint32();
 
 	friend std::ostream& operator<<(std::ostream& output, const Color& color)
 	{

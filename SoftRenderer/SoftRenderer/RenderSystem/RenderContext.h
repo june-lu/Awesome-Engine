@@ -29,7 +29,9 @@ public:
 	std::vector < std::vector<Texture>> allTextures;
 	ShadedMode shadedMode;
 	std::vector < uint32_t> frameBuffer;
+	std::vector < uint32_t> MASSFrameBuffer;
 	std::vector < float > depthBuffer;
+	std::vector < float > MASSDepthBuffer;
 	std::vector<Vertex> vertices;
 	std::vector<uint32_t> indices;
 	std::vector<Vector3f> normals;

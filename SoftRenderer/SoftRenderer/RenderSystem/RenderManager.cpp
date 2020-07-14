@@ -110,15 +110,20 @@ Matrix4f GetViewPortMatrix(int width, int height, float zNear, float zFar)
 
 RenderManager::RenderManager(const char* _windowName, int _width, int _height)
 {
+	int samplingNum = 2;
 	sdlInterface = new SDLInterface(_windowName, _width, _height);
 	renderContext = new RenderContext();
 	renderContext->width = _width;
 	renderContext->height = _height;
 	renderContext->frameBuffer.resize(_width * _height);
+	renderContext->MASSFrameBuffer.resize(_width * _height * samplingNum * samplingNum);
 	renderContext->depthBuffer.resize(_width * _height);
+	renderContext->MASSDepthBuffer.resize(_width * _height * samplingNum * samplingNum);
 
 	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), std::numeric_limits<unsigned int>::max());
+	std::fill(renderContext->MASSFrameBuffer.begin(), renderContext->MASSFrameBuffer.end(), std::numeric_limits<unsigned int>::max());
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());
+	std::fill(renderContext->MASSDepthBuffer.begin(), renderContext->MASSDepthBuffer.end(), std::numeric_limits<float>::max());
 
 	rasterizer = new Rasterizer(renderContext);
 
@@ -150,7 +155,9 @@ void RenderManager::RenderClear()
 	Color color = Color::black;
 	Uint32 col = color.GetUintA() << 24 | color.GetUintB() << 16 | color.GetUintG() << 8 | color.GetUintR() << 0;
 	std::fill(renderContext->frameBuffer.begin(), renderContext->frameBuffer.end(), col);
+	std::fill(renderContext->MASSFrameBuffer.begin(), renderContext->MASSFrameBuffer.end(), col);
 	std::fill(renderContext->depthBuffer.begin(), renderContext->depthBuffer.end(), std::numeric_limits<float>::max());
+	std::fill(renderContext->MASSDepthBuffer.begin(), renderContext->MASSDepthBuffer.end(), std::numeric_limits<float>::max());
 }
 void RenderManager::DrawMesh(Shader* shader, std::vector<Vertex> vertices, std::vector<uint32_t> indices, int texturesID, ShadedMode shadedMode)
 {

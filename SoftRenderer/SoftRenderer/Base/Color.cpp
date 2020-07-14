@@ -61,7 +61,7 @@ Color& Color::operator *=(float num)
 }
 Color Color::operator *(float num)
 {
-	return Color(r  * num, b  * num, g  * num, a  * num);
+	return Color(r  * num, g  * num, b  * num, a  * num);
 }
 Color& Color::operator +=(const Color &color)
 {
@@ -82,4 +82,9 @@ Color& Color::operator *=(const Color &color)
 Vector3f Color::ToVec3()
 {
 	return Vector3f(r, g, b);
+}
+
+uint32_t Color::ToUint32()
+{
+	return (GetUintA() << 24) | (GetUintB() << 16) | (GetUintG() << 8) | (GetUintR() << 0);
 }
