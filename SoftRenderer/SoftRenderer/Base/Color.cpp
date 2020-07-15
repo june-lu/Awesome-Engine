@@ -53,11 +53,11 @@ Color& Color::operator /=(float num)
 }
 Color Color::operator /(float num)
 {
-	return Color(r / num, b / num, g / num, a / num);
+	return Color(r / num, g / num, b / num, a / num);
 }
 Color& Color::operator *=(float num)
 {
-	r *= num; b *= num; g *= num;;
+	r *= num; g *= num; b *= num;
 	return *this;
 }
 Color Color::operator *(float num)
@@ -66,23 +66,23 @@ Color Color::operator *(float num)
 }
 Color& Color::operator +=(const Color &color)
 {
-	r += color.r; b += color.b; g += color.g; a += color.a;
+	r += color.r; g += color.g; b += color.b;  a += color.a;
 	return *this;
 }
 
 Color Color::operator +(Color &color)
 {
-	return Color(r + color.r, b + color.b, g + color.g, a + color.a);
+	return Color(r + color.r, g + color.g, b + color.b, a + color.a);
 }
 
 Color& Color::operator -=(const Color &color)
 {
-	r -= color.r; b -= color.b; g -= color.g; a -= color.a;
+	r -= color.r;  g -= color.g; b -= color.b; a -= color.a;
 	return *this;
 }
 Color& Color::operator *=(const Color &color)
 {
-	r *= color.r; b *= color.b; g *= color.g; a *= color.a;
+	r *= color.r;  g *= color.g; b *= color.b; a *= color.a;
 	return *this;
 }
 
